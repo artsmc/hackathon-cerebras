@@ -3,11 +3,11 @@
 ## High-Level Overview
 PolicyGlass is a Next.js web application that provides AI-powered policy document analysis. The system consists of:
 
-- **Frontend**: Next.js 15 application with App Router architecture, TypeScript, and Tailwind CSS for styling
-- **Backend**: Server-side processing with Prisma ORM for database operations
+- **Frontend**: Next.js 15 application with App Router architecture, TypeScript, and Sass for styling
+- **Backend**: Server-side processing with Prisma ORM for database operations and API routes
 - **Database**: SQLite database (configured via DATABASE_URL environment variable)
-- **Authentication**: Built-in user authentication system with session management
-- **Data Models**: User management, password security, configuration, session tracking, and audit logging
+- **Authentication**: Comprehensive user authentication system with session management, RBAC, and security features
+- **Data Models**: User management, password security, configuration, session tracking, audit logging, and password reset functionality
 
 The application follows a client-server architecture where policy documents are processed server-side for security and performance reasons. Users interact through a responsive web interface that provides real-time analysis results with visual flagging of potential issues.
 
@@ -97,21 +97,31 @@ erDiagram
 ```mermaid
 flowchart TD
     A[User Access PolicyGlass] --> B[User Authentication]
-    B --> C[Policy Document Input]
-    C --> D[Server-side Document Processing]
-    D --> E[AI Analysis Engine]
-    E --> F[Results Generation]
-    F --> G[Visual Flag Display]
-    G --> H[Full Report View Toggle]
-    H --> I[Results Dashboard]
+    B --> C[Role-Based Access Control]
+    C --> D[Policy Document Input]
+    D --> E[Server-side Document Processing]
+    E --> F[AI Analysis Engine]
+    F --> G[Results Generation]
+    G --> H[Visual Flag Display]
+    H --> I[Full Report View Toggle]
+    I --> J[Results Dashboard]
 ```
 
 ## File Structure
 - **policyglass/src/app/**: Next.js App Router pages and layout components
-  - **home/**: Main dashboard with policy input interface
+  - **home/**: Main landing page with navigation
+  - **login/**: User login interface
+  - **register/**: User registration interface
+  - **dashboard/**: Authenticated user dashboard
+  - **admin/**: Administrative dashboard and user management
   - **results/**: Analysis results display with flags and warnings
   - **layout.tsx**: Root layout with font configuration and global styles
   - **page.tsx**: Default landing page
+- **policyglass/src/app/api/**: API routes for authentication and admin functionality
+  - **auth/**: Authentication-related API endpoints (login, logout, register, password reset, verify)
+  - **admin/**: Admin-only API endpoints (user management)
+- **policyglass/src/app/components/**: Reusable React components for authentication and UI
+- **policyglass/src/app/lib/**: Utility functions for session management and authentication
 - **policyglass/prisma/**: Database schema and Prisma configuration
   - **schema.prisma**: Data models for users, sessions, audit logs, etc.
 - **memory-bank/**: Project memory and context documentation

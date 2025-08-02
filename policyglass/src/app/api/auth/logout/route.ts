@@ -1,68 +1,61 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '../../../../generated/prisma';
-import { z } from 'zod';
-import { deleteSession } from '@/app/lib/session';
+import { decrypt } from '@/app/lib/session';
+import { cookies } from 'next/headers';
 
 const prisma = new PrismaClient();
 
-const logoutSchema = z.object({
-  token: z.string(),
-});
-
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { token } = logoutSchema.parse(body);
+    // Get the session from cookies
+    const sessionCookie = request.cookies.get('session')?.value;
+    
+    // Decrypt the session to get user information
+    const decryptedSession = await decrypt(sessionCookie);
+    const userId = decryptedSession?.userId;
 
-    // Find and invalidate the session
-    const session = await prisma.session.findFirst({
-      where: {
-        jwt_token: token,
+    // Delete session cookie first
+    const cookieStore = await cookies();
+    cookieStore.delete('session');
+
+    // If we have user info, find and invalidate the session in database
+    if (userId) {
+      const session = await prisma.session.findFirst({
+        where: {
+          user_id: userId,
+          valid: true,
+        },
+        orderBy: {
+          last_activity: 'desc'
+        }
+      });
+
+      if (session) {
+        await prisma.session.update({
+          where: { id: session.id },
+          data: {
+            valid: false,
+            terminated_at: new Date(),
+          }
+        });
+
+        await prisma.auditLog.create({
+          data: {
+            user_id: userId,
+            event_type: 'logout',
+            description: 'User logged out successfully',
+            source_ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
+            user_agent: request.headers.get('user-agent') || '',
+          }
+        });
       }
-    });
-
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Invalid session token' },
-        { status: 401 }
-      );
     }
-
-    // Invalidate the session
-    await prisma.session.update({
-      where: { id: session.id },
-      data: {
-        valid: false,
-        terminated_at: new Date(),
-      }
-    });
-
-    // Log logout event
-    await prisma.auditLog.create({
-      data: {
-        user_id: session.user_id,
-        event_type: 'logout',
-        description: 'User logged out successfully',
-        source_ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
-        user_agent: request.headers.get('user-agent') || '',
-      }
-    });
-
-    // Delete session cookie
-    await deleteSession();
 
     return NextResponse.json({
       message: 'Logout successful',
     }, { status: 200 });
 
   } catch (error: unknown) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Invalid input data', details: error.issues },
-        { status: 400 }
-      );
-    }
-
     console.error('Logout error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

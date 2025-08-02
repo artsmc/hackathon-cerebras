@@ -9,6 +9,8 @@ Business goals include providing an intuitive interface for policy analysis, ach
 - **Policy Input Interface**: Handles user input for policy topics, document text, or URLs through a responsive form-based interface
 - **Document Processing Engine**: Manages server-side policy document analysis and AI-powered parsing to identify flags and warnings
 - **Results Visualization**: Displays analysis results with visual indicators for flags (red) and warnings (yellow) with toggleable full report view
-- **User Authentication System**: Handles user registration, login, password management, session tracking, and role-based access control
+- **User Authentication System**: Handles user registration, login, password management, session tracking, and role-based access control (RBAC)
+- **Admin User Management**: Provides administrative interface for managing users and their roles
 - **Audit Logging**: Tracks user activities, authentication events, and system interactions for compliance and security monitoring
 - **Database Management**: Maintains user data, session information, password history, configuration settings, and banned passwords
+- **Password Security**: Implements password history tracking, banned password checking, and reset functionality with expiration

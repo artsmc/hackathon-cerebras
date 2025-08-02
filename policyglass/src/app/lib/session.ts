@@ -12,7 +12,7 @@ export interface SessionPayload {
   username: string
   role: string
   expiresAt: Date
-  [key: string]: any // Add index signature to make it compatible with JWTPayload
+  [key: string]: string | number | Date | boolean | undefined // Add specific type instead of any
 }
 
 // Get the secret key from environment variables
@@ -32,6 +32,7 @@ export async function encrypt(payload: SessionPayload): Promise<string> {
 export async function decrypt(session: string | undefined): Promise<SessionPayload | null> {
   try {
     if (!session) {
+      console.log('No session token provided')
       return null
     }
     
@@ -41,7 +42,7 @@ export async function decrypt(session: string | undefined): Promise<SessionPaylo
     
     return payload as SessionPayload
   } catch (error) {
-    console.log('Failed to verify session')
+    console.log('Failed to verify session:', error)
     return null
   }
 }
