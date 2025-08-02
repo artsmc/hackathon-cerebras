@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import AuthCheck from "../components/AuthCheck";
+import Header from "../components/Header";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
@@ -34,17 +35,15 @@ export default function Home() {
 
   return (
     <AuthCheck>
-      <div className="font-sans min-h-screen p-8 pb-20">
+      <div className="font-sans min-h-screen py-4 pb-20">
+        <Header />
         <main className="flex flex-col gap-8 items-center">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            PolicyGlass
-          </h1>
           
           <div className="flex w-full max-w-6xl gap-8">
             {/* Left Column - 33% width (increased from 25%) */}
             <div className="w-1/3 pl-8 pr-4">
               {/* Description Div */}
-              <div className="mb-8 p-6 bg-background border border-gray-200 rounded-[24px] transition-all duration-300 hover:shadow-lg hover:scale-105">
+              <div className="mb-8 p-6 bg-white border border-gray-200 rounded-[24px] transition-all duration-300 hover:shadow-lg ">
                 <h2 className="text-xl font-semibold mb-4 text-foreground">About PolicyGlass</h2>
                 <p className="text-foreground">
                   PolicyGlass is an innovative platform that helps you analyze and understand complex policy documents. 
@@ -54,25 +53,24 @@ export default function Home() {
               </div>
               
               {/* Input Div */}
-              <div className="p-6 bg-background border border-gray-200 rounded-[24px] transition-all duration-300 hover:shadow-lg hover:scale-105">
+              <div className="p-6 bg-white border border-gray-200 rounded-[24px] transition-all duration-300 hover:shadow-lg animate-breathing-shadow">
                 <h2 className="text-xl font-semibold mb-4 text-foreground">Analyze a Policy</h2>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
                     <label htmlFor="policyInput" className="block text-sm font-medium mb-2 text-foreground">
-                      Enter policy topic or document
+                      Paste a Policy URL
                     </label>
-                    <textarea
+                    <input
                       id="policyInput"
                       className="w-full p-3 border border-gray-300 rounded-md text-foreground bg-white"
-                      rows={4}
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Enter a policy topic, paste document text, or provide a URL..."
+                      placeholder="Enter a policy URL..."
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-foreground text-background px-4 py-2 rounded-md hover:bg-[#383838] transition-all duration-300 hover:scale-105 hover:shadow-md"
+                    className="w-full bg-emerald-700 text-white px-4 py-2 rounded-md hover:bg-emerald-400 transition-all duration-300 hover:shadow-md"
                   >
                     Analyze Policy
                   </button>
@@ -111,7 +109,7 @@ export default function Home() {
                     {currentAnimation === 1 && (
                       <motion.div
                         key="flags"
-                        className="relative z-10 w-full bg-background bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg p-6"
+                        className="relative z-10 w-full bg-white bg-opacity-40 backdrop-blur-sm rounded-lg shadow-lg p-6"
                         initial={{ opacity: 0, y: 100 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -100 }}
@@ -152,15 +150,12 @@ export default function Home() {
                     {currentAnimation === 2 && (
                       <motion.div
                         key="review"
-                        className="relative z-10 w-full bg-background bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg p-8 text-center"
+                        className="relative z-10 w-full bg-white bg-opacity-40 backdrop-blur-sm rounded-lg shadow-lg p-8 text-center"
                         initial={{ opacity: 0, y: 100 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -100 }}
                         transition={{ duration: 0.5 }}
                       >
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                          Policy Analysis Complete
-                        </h2>
                         <div className="flex justify-center mb-4">
                           {/* 5 star rating */}
                           {[...Array(5)].map((_, i) => (
@@ -170,10 +165,9 @@ export default function Home() {
                           ))}
                         </div>
                         <p className="text-foreground">
-                          "This tool helped me understand complex policy documents in minutes. 
-                          The insights were clear and actionable. Highly recommended!"
+                          PolicyGlass protected me from agreeing to Disney’s predatory release of liability within Disney+. Now, if I get injured, I have the grounds to sue!
                         </p>
-                        <p className="text-foreground font-medium mt-4">- Sarah Johnson, Policy Analyst</p>
+                        <p className="text-foreground font-medium mt-4">- Alexandra Rosay, Associate Analyst</p>
                       </motion.div>
                     )}
                   </AnimatePresence>

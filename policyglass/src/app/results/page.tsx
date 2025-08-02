@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Flag, AlertTriangle, FileText } from "lucide-react";
+import Header from "../components/Header";
 
 const bounceInAnimation = `
   @keyframes bounceIn {
@@ -39,12 +40,10 @@ export default function Results() {
   ];
 
   return (
-    <div className="font-sans min-h-screen p-8 pb-20">
+    <div className="font-sans min-h-screen py-4 pb-20">
+      <Header />
       <style>{bounceInAnimation}</style>
       <main className="flex flex-col">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground text-center mb-8">
-          Policy Analysis Results
-        </h1>
         
         <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl mx-auto h-full">
           {/* Left Column - Flags and Warnings */}

@@ -6,7 +6,7 @@ export default async function AdminUsersPage() {
   
   if (!userIsAdmin) {
     return (
-      <div className="font-sans min-h-screen p-8 pb-20">
+      <div className="font-sans min-h-screen py-4 pb-20">
         <main className="flex flex-col gap-8 items-center justify-center min-h-screen">
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Access Denied
@@ -35,7 +35,7 @@ export default async function AdminUsersPage() {
   ]
 
   return (
-    <div className="font-sans min-h-screen p-8 pb-20">
+    <div className="font-sans min-h-screen py-4 pb-20">
       <main className="flex flex-col gap-8">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           User Management

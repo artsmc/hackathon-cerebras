@@ -1,4 +1,5 @@
 import { verifySession, isAdmin } from '../lib/session'
+import Header from '../components/Header'
 
 export default async function DashboardPage() {
   const session = await verifySession()
@@ -6,11 +7,9 @@ export default async function DashboardPage() {
   const userIsAdmin = await isAdmin()
 
   return (
-    <div className="font-sans min-h-screen p-8 pb-20">
+    <div className="font-sans min-h-screen py-4 pb-20">
+      <Header />
       <main className="flex flex-col gap-8">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Dashboard
-        </h1>
         
         <div className="flex w-full max-w-6xl gap-8">
           {/* Welcome Section */}
