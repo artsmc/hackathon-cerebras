@@ -10,3 +10,82 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id                     Int       @id @default(autoincrement())
+  username               String    @unique
+  email                  String    @unique
+  password_hash          String
+  password_salt          String
+  password_last_changed  DateTime  @default(now())
+  is_temp_password       Boolean   @default(false)
+  last_successful_login  DateTime?
+  failed_login_attempts  Int       @default(0)
+  account_locked         Boolean   @default(false)
+  piv_verified           Boolean   @default(false)
+  role                   String
+  created_at             DateTime  @default(now())
+  sessions               Session[]
+  password_history       PasswordHistory[]
+  reset_requests         PasswordResetRequest[]
+  audit_logs             AuditLog[]
+}
+
+model PasswordHistory {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  user        User     @relation(fields: [user_id], references: [id])
+  password_hash String
+  password_salt String
+  changed_at  DateTime @default(now())
+}
+
+model Config {
+  id        Int     @id @default(autoincrement())
+  name      String?
+  logo      String?
+  appType   Int?
+  use_case  String?
+  is_active Boolean @default(false)
+}
+
+model Session {
+  id             String   @id
+  user_id        Int
+  user           User     @relation(fields: [user_id], references: [id])
+  session_start  DateTime @default(now())
+  last_activity  DateTime @default(now())
+  terminated_at  DateTime?
+  jwt_token      String?
+  ip_address     String
+  user_agent     String?
+  valid          Boolean  @default(true)
+}
+
+model AuditLog {
+  id           Int      @id @default(autoincrement())
+  user_id      Int?
+  user         User?    @relation(fields: [user_id], references: [id])
+  event_time   DateTime @default(now())
+  event_type   String
+  description  String?
+  source_ip    String
+  user_agent   String?
+}
+
+model PasswordResetRequest {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  user        User     @relation(fields: [user_id], references: [id])
+  reset_token String   @unique
+  created_at  DateTime @default(now())
+  expires_at  DateTime
+  used        Boolean  @default(false)
+}
+
+model BannedPassword {
+  id         Int      @id @default(autoincrement())
+  password   String
+  source     String?
+  created_at DateTime @default(now())
+}
