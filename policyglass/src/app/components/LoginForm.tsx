@@ -1,7 +1,10 @@
+'use client';
+
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface LoginFormProps {
-  onLoginSuccess: (token: string) => void;
+  onLoginSuccess?: (token: string) => void;
 }
 
 export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
@@ -9,6 +12,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,12 +26,18 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        credentials: 'include',
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        onLoginSuccess(data.token);
+        // If onLoginSuccess is provided, call it, otherwise redirect
+        if (onLoginSuccess) {
+          onLoginSuccess(data.token);
+        } else {
+          router.push('/dashboard');
+        }
       } else {
         setError(data.error || 'Login failed');
       }

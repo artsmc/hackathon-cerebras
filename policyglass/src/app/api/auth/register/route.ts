@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '../../../../generated/prisma';
 import bcrypt from 'bcryptjs';
 import { z, ZodError } from 'zod';
+import { createSession } from '@/app/lib/session';
 
 const prisma = new PrismaClient();
 
@@ -71,6 +72,9 @@ export async function POST(request: NextRequest) {
         password_salt: user.password_salt,
       }
     });
+
+    // Create session for automatic login
+    await createSession(user.id, user.username, user.role);
 
     return NextResponse.json({
       message: 'User registered successfully',

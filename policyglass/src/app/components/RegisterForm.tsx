@@ -1,7 +1,10 @@
+'use client';
+
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface RegisterFormProps {
-  onRegisterSuccess: () => void;
+  onRegisterSuccess?: () => void;
 }
 
 export default function RegisterForm({ onRegisterSuccess }: RegisterFormProps) {
@@ -11,6 +14,7 @@ export default function RegisterForm({ onRegisterSuccess }: RegisterFormProps) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,12 +34,18 @@ export default function RegisterForm({ onRegisterSuccess }: RegisterFormProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, email, password }),
+        credentials: 'include',
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        onRegisterSuccess();
+        // If onRegisterSuccess is provided, call it, otherwise redirect to dashboard
+        if (onRegisterSuccess) {
+          onRegisterSuccess();
+        } else {
+          router.push('/dashboard');
+        }
       } else {
         setError(data.error || 'Registration failed');
       }
