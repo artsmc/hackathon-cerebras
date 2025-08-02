@@ -71,7 +71,6 @@
     "typescript": "^5"
   }
 }
-```
 
 ## Tool Usage Patterns
 - **ESLint**: 

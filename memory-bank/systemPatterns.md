@@ -30,12 +30,14 @@
 
 - **Data Flow**
   1. User authentication via frontend forms
-  2. API routes handle auth logic and database operations
-  3. Session management with JWT tokens and database storage
-  4. Protected routes validate sessions and roles
-  5. Policy document input via home page form
-  6. Results displayed with flag/warning visualization
-  7. Admin users can manage system via admin dashboard
+  2. API routes delegate to controllers for business logic
+  3. Controllers coordinate with services for data operations
+  4. Services handle Prisma database operations and external library concerns
+  5. Session management with JWT tokens and database storage
+  6. Protected routes validate sessions and roles
+  7. Policy document input via home page form
+  8. Results displayed with flag/warning visualization
+  9. Admin users can manage system via admin dashboard
 
 ## Key Technical Decisions
 - **Next.js 15 App Router**: Better data fetching patterns and simplified routing over Pages Router
@@ -46,12 +48,15 @@
 - **Zod Validation**: Comprehensive input validation for all API routes
 - **UUID for Session IDs**: Secure random identifiers for sessions
 - **Comprehensive Security Features**: Password history, banned passwords, account locking
+- **Controller-Service Architecture**: Separation of concerns with thin API routes, business logic in controllers, and data operations in services
 
 ## Design Patterns
 - **Component Organization**: Feature-based structure in `src/app/` directory
 - **Server/Client Components**: Proper separation of server-side data loading and client-side interactivity
 - **Middleware Protection**: Centralized route protection logic
 - **Session Utilities**: Reusable authentication functions in `lib/session.ts`
+- **Controller Pattern**: Business logic separated from API routes
+- **Service Pattern**: Data access and external library concerns separated from business logic
 - **Error Handling**: Centralized error responses with proper HTTP status codes
 - **Data Validation**: Zod schemas for consistent validation across frontend and backend
 - **Role-Based Rendering**: Conditional UI display based on user permissions
@@ -60,7 +65,9 @@
 ## Critical Implementation Paths
 1. **Authentication Flow**
    - Client: LoginForm, RegisterForm, PasswordReset components
-   - Server: Auth API routes with comprehensive validation
+   - Server: Auth API routes delegating to AuthController
+   - Controller: AuthController coordinating AuthService and PasswordService
+   - Service: AuthService and PasswordService handling Prisma operations
    - Database: User, Session, PasswordHistory, PasswordResetRequest tables
    - Security: bcrypt hashing, JWT tokens, audit logging
 
@@ -78,7 +85,9 @@
 
 4. **Admin Dashboard**
    - Client: Protected admin pages with user management
-   - Server: Admin-only API routes for user management
+   - Server: Admin API routes delegating to AdminController
+   - Controller: AdminController coordinating AdminService
+   - Service: AdminService handling user management Prisma operations
    - Database: Audit logs and user data retrieval
    - Security: Role validation for all admin operations
 
@@ -86,8 +95,10 @@
 - `layout.tsx` provides global styling and font configuration
 - `page.tsx` components handle route-specific UI logic
 - `lib/session.ts` contains shared authentication utilities
-- Auth API routes (`/api/auth/*`) handle authentication database operations
-- Admin API routes (`/api/admin/*`) handle admin-only database operations
+- **Controllers** (`/controllers/*`) handle business logic and coordinate services
+- **Services** (`/services/*`) handle data access and external library operations
+- Auth API routes (`/api/auth/*`) delegate to AuthController
+- Admin API routes (`/api/admin/*`) delegate to AdminController
 - Frontend components communicate with API routes via fetch requests
 - Middleware protects routes based on authentication status and roles
 - AuthCheck wrapper component provides client-side session validation
