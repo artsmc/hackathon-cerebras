@@ -18,9 +18,112 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.auth-bg {
-  background-image: url('/next.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.login-form,
+.register-form,
+.password-reset-request-form,
+.password-reset-confirm-form {
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.login-form h2,
+.register-form h2,
+.password-reset-request-form h2,
+.password-reset-confirm-form h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.login-form form,
+.register-form form,
+.password-reset-request-form form,
+.password-reset-confirm-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-form label,
+.register-form label,
+.password-reset-request-form label,
+.password-reset-confirm-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.login-form input,
+.register-form input,
+.password-reset-request-form input,
+.password-reset-confirm-form input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.login-form button,
+.register-form button,
+.password-reset-request-form button,
+.password-reset-confirm-form button {
+  padding: 0.75rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.login-form button:hover,
+.register-form button:hover,
+.password-reset-request-form button:hover,
+.password-reset-confirm-form button:hover {
+  background-color: #0051cc;
+}
+
+.login-form button:disabled,
+.register-form button:disabled,
+.password-reset-request-form button:disabled,
+.password-reset-confirm-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #e00;
+  padding: 0.5rem;
+  background-color: #ffe6e6;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.success {
+  color: #0a0;
+  padding: 0.5rem;
+  background-color: #e6ffe6;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.text-blue-500 {
+  color: #0070f3;
+}
+
+.hover\:underline:hover {
+  text-decoration: underline;
+}
+
+.mr-4 {
+  margin-right: 1rem;
 }
