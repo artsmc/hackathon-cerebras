@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle submit logic here
     console.log("Submitted value:", inputValue);
+    // Navigate to results page
+    router.push("/results");
   };
 
   return (
@@ -22,7 +26,7 @@ export default function Home() {
           {/* Left Column - 25% width */}
           <div className="w-1/4 pl-8 pr-4">
             {/* Description Div */}
-            <div className="mb-8 p-6 bg-background border border-gray-200 rounded-lg">
+            <div className="mb-8 p-6 bg-background border border-gray-200 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105">
               <h2 className="text-xl font-semibold mb-4 text-foreground">About PolicyGlass</h2>
               <p className="text-foreground">
                 PolicyGlass is an innovative platform that helps you analyze and understand complex policy documents. 
@@ -32,7 +36,7 @@ export default function Home() {
             </div>
             
             {/* Input Div */}
-            <div className="p-6 bg-background border border-gray-200 rounded-lg">
+            <div className="p-6 bg-background border border-gray-200 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105">
               <h2 className="text-xl font-semibold mb-4 text-foreground">Analyze a Policy</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -50,7 +54,7 @@ export default function Home() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-foreground text-background px-4 py-2 rounded-md hover:bg-[#383838] transition-colors"
+                  className="w-full bg-foreground text-background px-4 py-2 rounded-md hover:bg-[#383838] transition-all duration-300 hover:scale-105 hover:shadow-md"
                 >
                   Analyze Policy
                 </button>
