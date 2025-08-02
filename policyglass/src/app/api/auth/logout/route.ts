@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '../../../../generated/prisma';
 import { z } from 'zod';
+import { deleteSession } from '@/app/lib/session';
 
 const prisma = new PrismaClient();
 
@@ -46,6 +47,9 @@ export async function POST(request: NextRequest) {
         user_agent: request.headers.get('user-agent') || '',
       }
     });
+
+    // Delete session cookie
+    await deleteSession();
 
     return NextResponse.json({
       message: 'Logout successful',

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '../../../../generated/prisma';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid';
+import { createSession } from '@/app/lib/session';
 
 const prisma = new PrismaClient();
 
@@ -90,23 +90,15 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    // Generate JWT token
-    const token = jwt.sign(
-      { 
-        userId: user.id, 
-        username: user.username,
-        role: user.role 
-      },
-      process.env.JWT_SECRET || 'fallback_secret_key',
-      { expiresIn: '24h' }
-    );
-
     // Create session
+    await createSession(user.id, user.username, user.role);
+
+    // Create session record in database
     const session = await prisma.session.create({
       data: {
         id: uuidv4(),
         user_id: user.id,
-        jwt_token: token,
+        jwt_token: null, // We're using cookie-based sessions now
         ip_address: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
         user_agent: request.headers.get('user-agent') || '',
       }
@@ -125,7 +117,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       message: 'Login successful',
-      token: token,
       user: {
         id: user.id,
         username: user.username,
