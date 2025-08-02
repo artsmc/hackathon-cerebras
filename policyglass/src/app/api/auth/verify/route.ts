@@ -3,7 +3,17 @@ import { getSession } from '@/app/lib/session'
 
 export async function POST(request: NextRequest) {
   try {
+    // Debug: Log cookies received
+    const cookies = request.cookies;
+    const sessionCookie = cookies.get('session')?.value;
+    console.log('Verify route - Session cookie present:', !!sessionCookie);
+    if (sessionCookie) {
+      console.log('Verify route - Session cookie length:', sessionCookie.length);
+    }
+
     const session = await getSession()
+    
+    console.log('Verify route - Decrypted session:', session);
     
     if (!session) {
       return NextResponse.json(

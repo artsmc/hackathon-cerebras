@@ -25,6 +25,7 @@ export default function AuthCheck({ children }: { children: React.ReactNode }) {
           router.push('/login')
         }
       } catch (error) {
+        console.error('Auth check failed:', error)
         router.push('/login')
       } finally {
         setIsLoading(false)

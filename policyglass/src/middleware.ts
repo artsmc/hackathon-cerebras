@@ -27,10 +27,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // If accessing a public route with a valid session, redirect to dashboard
-  if (isPublicRoute && session && path !== '/login') {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
-  }
+  // Remove the problematic redirect that was causing loops
+  // The login page should handle its own redirect logic
 
   return NextResponse.next()
 }
