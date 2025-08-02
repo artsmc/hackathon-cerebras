@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle submit logic here
     console.log("Submitted value:", inputValue);
+    // Navigate to results page
+    router.push("/results");
   };
 
   return (

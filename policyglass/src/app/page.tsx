@@ -1,10 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real application, you would authenticate the user here
+    // For now, we'll just navigate to the home page
+    router.push('/home');
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 auth-bg">
@@ -14,7 +23,7 @@ export default function AuthPage() {
           <p className="text-gray-600 mt-2">Sign in to your account</p>
         </div>
         
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email Address
