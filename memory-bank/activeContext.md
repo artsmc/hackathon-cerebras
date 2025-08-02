@@ -5,6 +5,7 @@
 - Building policy visualization components with AI analysis
 - Setting up authentication flow with comprehensive security features
 - Finalizing database schema for policy analysis and user management
+- Refactoring architecture to implement controller-service pattern
 
 ## Recent Changes
 - Created initial Next.js 15 App Router structure
@@ -16,6 +17,12 @@
 - Built middleware for route protection
 - Developed frontend components and pages for all auth flows
 - Created policy analysis results page with flag visualization
+- **Refactored API routes to implement controller-service architecture pattern**
+  - Created service layer to encapsulate Prisma operations and external library concerns
+  - Created controller layer to handle business logic and coordinate services
+  - Updated API routes to delegate to controllers (thin route handlers)
+  - Services now handle all database operations and external library interactions
+  - Controllers now handle all business logic and validation
 
 ## Next Steps
 - Complete document parsing service (PDF/DOCX to structured data)
@@ -26,6 +33,7 @@
 - Create admin user management interface with API integration
 - Add banned password database seeding
 - Implement audit log viewing for admin users
+- Add proper audit logging to admin controller
 
 ## Active Decisions & Considerations
 - Using Prisma for ORM vs direct SQL queries (chose Prisma for type safety and developer experience)

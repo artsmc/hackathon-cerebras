@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '../../../../generated/prisma'
+import { AdminController } from '@/app/controllers/admin.controller'
 import { getSession } from '@/app/lib/session'
 import { z } from 'zod'
-
-const prisma = new PrismaClient()
 
 // Schema for updating user roles
 const updateUserRoleSchema = z.object({
@@ -24,23 +22,14 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Get all users
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        role: true,
-        created_at: true,
-        last_successful_login: true,
-        account_locked: true,
-      },
-      orderBy: {
-        created_at: 'desc',
-      }
-    })
+    const result = await AdminController.getAllUsers();
 
-    return NextResponse.json({ users }, { status: 200 })
+    if ('error' in result) {
+      return NextResponse.json(result, { status: 500 });
+    }
+
+    return NextResponse.json(result, { status: 200 });
+
   } catch (error) {
     console.error('Error fetching users:', error)
     return NextResponse.json(
@@ -74,30 +63,17 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    // Update user role
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: { role },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        role: true,
-      }
-    })
+    const result = await AdminController.updateUserRole(request);
+
+    if ('error' in result) {
+      return NextResponse.json(result, { status: 500 });
+    }
 
     // Log the role change
-    await prisma.auditLog.create({
-      data: {
-        user_id: session.userId,
-        event_type: 'role_change',
-        description: `Changed user ${updatedUser.username} role to ${role}`,
-        source_ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
-        user_agent: request.headers.get('user-agent') || '',
-      }
-    })
+    // TODO: Add proper audit logging to admin controller
 
-    return NextResponse.json({ user: updatedUser }, { status: 200 })
+    return NextResponse.json(result, { status: 200 });
+
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(

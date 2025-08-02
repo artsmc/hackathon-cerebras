@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '../../../../generated/prisma';
-import bcrypt from 'bcryptjs';
+import { AuthController } from '@/app/controllers/auth.controller';
 import { z } from 'zod';
-import { v4 as uuidv4 } from 'uuid';
-import { createSession } from '@/app/lib/session';
-
-const prisma = new PrismaClient();
 
 const loginSchema = z.object({
   username: z.string(),
@@ -17,113 +12,14 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { username, password } = loginSchema.parse(body);
 
-    // Find user by username or email
-    const user = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { username: username },
-          { email: username }
-        ]
-      }
-    });
+    const result = await AuthController.login(request);
 
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Invalid credentials' },
-        { status: 401 }
-      );
+    if ('error' in result) {
+      const status = result.error === 'Account is locked' ? 401 : 401;
+      return NextResponse.json(result, { status });
     }
 
-    // Check if account is locked
-    if (user.account_locked) {
-      return NextResponse.json(
-        { error: 'Account is locked' },
-        { status: 401 }
-      );
-    }
-
-    // Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-    
-    if (!isPasswordValid) {
-      // Increment failed login attempts
-      const updatedUser = await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          failed_login_attempts: user.failed_login_attempts + 1,
-        }
-      });
-
-      // Lock account after 5 failed attempts
-      if (updatedUser.failed_login_attempts >= 5) {
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            account_locked: true,
-          }
-        });
-      }
-
-      // Log failed login attempt
-      await prisma.auditLog.create({
-        data: {
-          user_id: user.id,
-          event_type: 'failed_login',
-          description: 'Failed login attempt',
-          source_ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
-          user_agent: request.headers.get('user-agent') || '',
-        }
-      });
-
-      return NextResponse.json(
-        { error: 'Invalid credentials' },
-        { status: 401 }
-      );
-    }
-
-    // Reset failed login attempts and update last successful login
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        failed_login_attempts: 0,
-        last_successful_login: new Date(),
-      }
-    });
-
-    // Create session
-    await createSession(user.id, user.username, user.role);
-
-    // Create session record in database
-    const session = await prisma.session.create({
-      data: {
-        id: uuidv4(),
-        user_id: user.id,
-        jwt_token: null, // We're using cookie-based sessions now
-        ip_address: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
-        user_agent: request.headers.get('user-agent') || '',
-      }
-    });
-
-    // Log successful login
-    await prisma.auditLog.create({
-      data: {
-        user_id: user.id,
-        event_type: 'successful_login',
-        description: 'User logged in successfully',
-        source_ip: session.ip_address,
-        user_agent: session.user_agent,
-      }
-    });
-
-    return NextResponse.json({
-      message: 'Login successful',
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      }
-    }, { status: 200 });
+    return NextResponse.json(result, { status: 200 });
 
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {

@@ -120,6 +120,15 @@ flowchart TD
 - **policyglass/src/app/api/**: API routes for authentication and admin functionality
   - **auth/**: Authentication-related API endpoints (login, logout, register, password reset, verify)
   - **admin/**: Admin-only API endpoints (user management)
+- **policyglass/src/app/controllers/**: Controller layer for handling business logic
+  - **auth.controller.ts**: Authentication-related business logic
+  - **admin.controller.ts**: Admin-related business logic
+- **policyglass/src/app/services/**: Service layer for handling data access and external library concerns
+  - **auth.service.ts**: Authentication data operations and user management
+  - **admin.service.ts**: Admin data operations and user management
+  - **password.service.ts**: Password hashing, validation, and reset operations
+  - **session.service.ts**: Session management and validation operations
+  - **audit.service.ts**: Audit logging operations
 - **policyglass/src/app/components/**: Reusable React components for authentication and UI
 - **policyglass/src/app/lib/**: Utility functions for session management and authentication
 - **policyglass/prisma/**: Database schema and Prisma configuration
