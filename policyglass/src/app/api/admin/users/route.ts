@@ -1,91 +1,89 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { AdminController } from '@/app/controllers/admin.controller'
-import { getSession } from '@/app/lib/session'
-import { z } from 'zod'
+import { AdminController } from '@/app/controllers/admin.controller';
+import { getSession } from '@/app/lib/session';
+import { z } from 'zod';
+import defineRoute from '@omer-x/next-openapi-route-handler';
 
-// Schema for updating user roles
-const updateUserRoleSchema = z.object({
-  userId: z.number(),
-  role: z.string(),
-})
+// Import schemas
+import { 
+  GetAllUsersResponseSchema, 
+  UpdateUserRoleRequestSchema, 
+  UpdateUserRoleResponseSchema 
+} from '@/app/lib/openapi/schemas';
 
 // GET - Get all users (admin only)
-export async function GET(request: NextRequest) {
-  try {
-    const session = await getSession()
+export const { GET } = defineRoute({
+  operationId: 'getAllUsers',
+  method: 'GET',
+  summary: 'Get all users',
+  description: 'Retrieve a list of all users (admin only)',
+  tags: ['Admin'],
+  action: async () => {
+    const session = await getSession();
     
     // Check if user is admin
     if (!session || session.role !== 'admin') {
-      return NextResponse.json(
-        { error: 'Unauthorized access' },
-        { status: 403 }
-      )
+      return new Response(JSON.stringify({ error: 'Unauthorized access' }), { status: 403 });
     }
 
+    const request = new Request('http://localhost/api/admin/users', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    
     const result = await AdminController.getAllUsers();
-
+    
     if ('error' in result) {
-      return NextResponse.json(result, { status: 500 });
+      return new Response(JSON.stringify(result), { status: 500 });
     }
-
-    return NextResponse.json(result, { status: 200 });
-
-  } catch (error) {
-    console.error('Error fetching users:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
-  }
-}
+    
+    return new Response(JSON.stringify(result), { status: 200 });
+  },
+  responses: {
+    200: { description: 'Users retrieved successfully', content: GetAllUsersResponseSchema },
+    403: { description: 'Forbidden - Admin access required' },
+    500: { description: 'Internal server error' },
+  },
+});
 
 // PUT - Update user role (admin only)
-export async function PUT(request: NextRequest) {
-  try {
-    const session = await getSession()
+export const { PUT } = defineRoute({
+  operationId: 'updateUserRole',
+  method: 'PUT',
+  summary: 'Update user role',
+  description: 'Update a user\'s role (admin only)',
+  tags: ['Admin'],
+  requestBody: UpdateUserRoleRequestSchema,
+  action: async ({ body }) => {
+    const session = await getSession();
     
     // Check if user is admin
     if (!session || session.role !== 'admin') {
-      return NextResponse.json(
-        { error: 'Unauthorized access' },
-        { status: 403 }
-      )
+      return new Response(JSON.stringify({ error: 'Unauthorized access' }), { status: 403 });
     }
-
-    const body = await request.json()
-    const { userId, role } = updateUserRoleSchema.parse(body)
 
     // Prevent admin from removing their own admin role
-    if (session.userId === userId && role !== 'admin') {
-      return NextResponse.json(
-        { error: 'Cannot remove your own admin role' },
-        { status: 400 }
-      )
+    if (session.userId === body.userId && body.role !== 'admin') {
+      return new Response(JSON.stringify({ error: 'Cannot remove your own admin role' }), { status: 400 });
     }
 
-    const result = await AdminController.updateUserRole(request);
-
+    const request = new Request('http://localhost/api/admin/users', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    
+    const result = await AdminController.updateUserRole(request as any);
+    
     if ('error' in result) {
-      return NextResponse.json(result, { status: 500 });
+      return new Response(JSON.stringify(result), { status: 500 });
     }
-
-    // Log the role change
-    // TODO: Add proper audit logging to admin controller
-
-    return NextResponse.json(result, { status: 200 });
-
-  } catch (error: unknown) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Invalid input data', details: error.issues },
-        { status: 400 }
-      )
-    }
-
-    console.error('Error updating user role:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
-  }
-}
+    
+    return new Response(JSON.stringify(result), { status: 200 });
+  },
+  responses: {
+    200: { description: 'User role updated successfully', content: UpdateUserRoleResponseSchema },
+    400: { description: 'Invalid input data or cannot remove own admin role' },
+    403: { description: 'Forbidden - Admin access required' },
+    500: { description: 'Internal server error' },
+  },
+});
