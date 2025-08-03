@@ -2,17 +2,31 @@
 
 import Header from "../components/Header";
 import AuthCheck from "../components/AuthCheck";
+import AnimatedHero from "../components/AnimatedHero";
 import QuotaDashboard from "../components/QuotaDashboard";
-import TestimonialsCarousel from "../components/TestimonialsCarousel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { QuotaClientService } from "../services/quota-client.service";
 import { ToastService } from "../services/toast.service";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Home() {
+export default function Analyze() {
+  // State to track which animation should be displayed
+  const [currentAnimation, setCurrentAnimation] = useState(0);
   const [policyUrl, setPolicyUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Handle animation sequence progression
+  useEffect(() => {
+    // Progress to the next animation after a delay
+    const animationTimer = setTimeout(() => {
+      if (currentAnimation < 2) { // Only progress through first two animations
+        setCurrentAnimation(prev => prev + 1);
+      }
+    }, 2000); // Show each animation for 2 seconds
+
+    return () => clearTimeout(animationTimer);
+  }, [currentAnimation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,86 +106,7 @@ export default function Home() {
     <AuthCheck>
       <div className="font-sans min-h-screen py-4 pb-20">
         <Header />
-        <main className="flex flex-col gap-8 items-center">
-          {/* Hero Section with Background Image and Flow Diagram */}
-          <div 
-            className="w-full relative mb-8"
-            style={{ 
-              backgroundImage: "url('/hero.jpg')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
-            }}
-          >
-            {/* Dark overlay for background image */}
-            <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="py-8 px-8 relative z-10">
-              <h1 className="text-4xl font-bold text-white text-shadow-lg/20 text-center mb-12">See through <span className="text-lime-300">deceptive</span> terms and <span className="text-lime-300">predatory</span> policies with PolicyGlass.</h1>
-              
-              {/* Flow Diagram Section */}
-              <div className="w-full max-w-6xl mx-auto">
-                {/* Horizontal flow diagram */}
-                <div className="flex items-center justify-between mb-12">
-                  <div className="bg-white border border-gray-200 rounded-[16px] p-6 w-48 h-32 flex items-center justify-center shadow-lg">
-                    <span className="text-center font-semibold">Policy Input</span>
-                  </div>
-                  
-                  <svg width="80" height="20" viewBox="0 0 80 20" className="text-white">
-                    <path d="M0 10 L70 10 M70 10 L65 5 M70 10 L65 15" stroke="currentColor" strokeWidth="3" fill="none" />
-                  </svg>
-                  
-                  <div className="bg-white border border-gray-200 rounded-[16px] p-6 w-48 h-32 flex items-center justify-center shadow-lg">
-                    <span className="text-center font-semibold">AI Processing</span>
-                  </div>
-                  
-                  <svg width="80" height="20" viewBox="0 0 80 20" className="text-white">
-                    <path d="M0 10 L70 10 M70 10 L65 5 M70 10 L65 15" stroke="currentColor" strokeWidth="3" fill="none" />
-                  </svg>
-                  
-                  <div className="bg-white border border-gray-200 rounded-[16px] p-6 w-48 h-32 flex items-center justify-center shadow-lg">
-                    <span className="text-center font-semibold">Results</span>
-                  </div>
-                </div>
-                
-                {/* Vertical arrow and content div */}
-                <div className="flex flex-col items-center fade-in-down">
-                  <svg width="20" height="60" viewBox="0 0 20 60" className="text-white">
-                    <path d="M10 0 L10 50 M10 50 L5 45 M10 50 L15 45" stroke="currentColor" strokeWidth="3" fill="none" />
-                  </svg>
-                  
-                  <div className="bg-white rounded-[16px] w-full max-w-2xl shadow-lg mt-4">
-                    <div className="text-foreground">
-                      <h3 className="font-bold text-white text-lg p-2 rounded-t-[16px] bg-lime-800 text-center">How does PolicyGlass work?</h3>
-                      <p className="text-[#323232] p-6 mb-4">
-                        Once a policy or terms page is sent, our agent gets to work by reading the content and grading it in sections. 
-                        Once the grading is complete, you get a full report on which policies to be aware of and potential releases of liability.
-                      </p>
-                      
-                      <h3 className="font-bold text-white text-lg p-2 bg-emerald-700 text-center">What is your Grading Criteria?</h3>
-                      <p className="text-[#323232] p-6 mb-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      </p>
-                      
-                      <h3 className="font-bold text-white text-lg p-2  bg-lime-800 text-center">Why use PolicyGlass?</h3>
-                      <p className="text-[#323232] p-6">
-                        More often than ever, companies are burying liability releases and hiding data collection practices within dense legal jargon. 
-                        PolicyGlass is built to aid your digital safety and protect your privacy.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Testimonials Carousel */}
-          <TestimonialsCarousel />
-
-          {/* Coming Soon Banner */}
-          <div className="w-full bg-lime-700 py-4 text-center text-white font-bold text-xl">
-            Coming Soon
-          </div>
+        <main className="flex flex-col gap-8 items-center  mt-12">
 
           <div className="flex w-full max-w-6xl gap-8">
             {/* Left Column - 33% width (increased from 25%) */}
@@ -230,11 +165,8 @@ export default function Home() {
                   className="absolute inset-0 w-full h-full object-cover z-0"
                 />
 
-                {/* Animated hero content - removed for now since we're using a static hero */}
-                <div className="relative z-10 text-center p-8">
-                  <h2 className="text-2xl font-bold text-foreground mb-4">Policy Analysis Visualization</h2>
-                  <p className="text-foreground">Your policy analysis results will appear here</p>
-                </div>
+                {/* Animated hero content */}
+                <AnimatedHero />
               </div>
             </div>
           </div>

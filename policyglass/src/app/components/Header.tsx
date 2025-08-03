@@ -27,7 +27,7 @@ export default function Header() {
   };
   
   return (
-    <div className="w-full mb-12">
+    <div className="w-full">
       {/* Title Bar */}
       <div className="bg-[#f0f4f2] py-4 px-8 flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
@@ -52,7 +52,18 @@ export default function Header() {
                 : 'text-white hover:bg-white hover:bg-opacity-20 hover:text-emerald-700 transition-all duration-300'
             }`}
           >
-            New Analysis
+            Home
+          </Link>
+          
+          <Link 
+            href="/analyze"
+            className={`px-4 py-2 rounded-md font-medium ${
+              pathname === '/analyze' 
+                ? 'bg-white text-emerald-700' 
+                : 'text-white hover:bg-white hover:bg-opacity-20 hover:text-emerald-700 transition-all duration-300'
+            }`}
+          >
+            Analyze
           </Link>
           
           <Link 
