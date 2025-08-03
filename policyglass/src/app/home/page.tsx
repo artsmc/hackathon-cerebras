@@ -168,76 +168,36 @@ export default function Home() {
           {/* Testimonials Carousel */}
           <TestimonialsCarousel />
 
-          {/* Coming Soon Banner */}
-          <div className="w-full bg-lime-700 py-4 text-center text-white font-bold text-xl">
-            Coming Soon
-          </div>
-
-          <div className="flex w-full max-w-6xl gap-8">
-            {/* Left Column - 33% width (increased from 25%) */}
-            <div className="w-1/3 pl-8 pr-4">
-              {/* Description Div */}
-              <div className="mb-8 p-6 bg-white border border-gray-200 rounded-[24px] transition-all duration-300 hover:shadow-lg">
-                <h2 className="text-xl font-semibold mb-4 text-foreground">About PolicyGlass</h2>
-                <p className="text-foreground">
-                  PolicyGlass is an innovative platform that helps you analyze and understand complex policy documents.
-                  Our AI-powered tool breaks down legal jargon into comprehensible insights, making policy analysis
-                  accessible to everyone. Simply enter a policy document or topic in the input field to get started.
-                </p>
-              </div>
-
-              {/* Quota Dashboard */}
-              <div className="mb-8">
-                <QuotaDashboard />
-              </div>
-
-              {/* Input Div */}
-              <div className="p-6 bg-white border border-gray-200 rounded-[24px] transition-all duration-300 hover:shadow-lg animate-breathing-shadow">
-                <h2 className="text-xl font-semibold mb-4 text-foreground">Analyze a Policy</h2>
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    <label htmlFor="policyInput" className="block text-sm font-medium mb-2 text-foreground">
-                      Paste a Policy URL
-                    </label>
-                    <input
-                      id="policyInput"
-                      name="policyInput"
-                      value={policyUrl}
-                      onChange={(e) => setPolicyUrl(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-md text-foreground bg-white"
-                      placeholder="Enter a policy URL..."
-                      disabled={isSubmitting}
-                    />
+          {/* Coming Soon Section with Browser Extension Info */}
+          <div className="w-full bg-lime-700 py-4">
+            <div className="max-w-6xl mx-auto px-8 flex gap-8 items-center">
+              {/* Left Column - Text Content */}
+              <div className="w-1/3">
+                <div className="flex items-center h-full">
+                  <div>
+                    <h2 className="text-xl font-semibold mb-2 text-white">Coming Soon</h2>
+                    <p className="text-white text-sm">
+                      We're working on releasing a browser extension that will automate the policy review process. 
+                      With this extension, you'll be able to instantly analyze terms of service and privacy policies 
+                      while browsing the web. The extension will highlight potential concerns and provide a quick 
+                      summary of the policy's implications for your privacy and rights.
+                    </p>
                   </div>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-2 rounded-md transition-all duration-300 hover:shadow-md bg-emerald-700 text-white hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? 'Creating Job...' : 'Analyze Policy'}
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            {/* Right Column - 67% width */}
-            <div className="w-2/3 pr-8 pl-4 flex items-center justify-center relative">
-              <div className="w-full h-full bg-gray-100 border border-gray-300 rounded-[24px] flex items-center justify-center overflow-hidden relative">
-                {/* Background image */}
-                <img
-                  src="/home.jpg"
-                  alt="Policy analysis background"
-                  className="absolute inset-0 w-full h-full object-cover z-0"
-                />
-
-                {/* Animated hero content - removed for now since we're using a static hero */}
-                <div className="relative z-10 text-center p-8">
-                  <h2 className="text-2xl font-bold text-foreground mb-4">Policy Analysis Visualization</h2>
-                  <p className="text-foreground">Your policy analysis results will appear here</p>
                 </div>
               </div>
+
+              {/* Right Column - Image */}
+              <div className="w-2/3 flex items-center justify-center">
+                <img
+                  src="/browser.jpg"
+                  alt="PolicyGlass Browser Extension"
+                  className="max-h-[250px] h-auto w-auto object-contain p-2"
+                />
+              </div>
             </div>
           </div>
+
+
         </main>
         
         {/* Toast Container */}
