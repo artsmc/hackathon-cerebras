@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Flag, AlertTriangle, FileText } from "lucide-react";
+import Header from "../components/Header";
 
 const bounceInAnimation = `
   @keyframes bounceIn {
@@ -39,16 +40,14 @@ export default function Results() {
   ];
 
   return (
-    <div className="font-sans min-h-screen p-8 pb-20">
+    <div className="font-sans min-h-screen py-4 pb-20">
+      <Header />
       <style>{bounceInAnimation}</style>
       <main className="flex flex-col">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground text-center mb-8">
-          Policy Analysis Results
-        </h1>
         
-        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl mx-auto h-full">
+        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl mx-auto h-80vh">
           {/* Left Column - Flags and Warnings */}
-          <div className={`bg-white border border-gray-200 rounded-lg p-6 transition-all duration-500 ease-out h-full ${showReport ? 'lg:w-1/3 transform translate-x-[-10px] scale-98' : 'lg:w-full'}`}>
+          <div className={`bg-white border border-gray-200 rounded-lg p-6 transition-all duration-500 ease-out flex flex-col h-full ${showReport ? 'lg:w-1/3 transform' : 'lg:w-full'}`}>
             <div className="flex flex-col items-center justify-center">
               <div className="text-center mb-6">
                 <div className="inline-block p-3 rounded-full bg-gray-100 mb-4">
@@ -96,9 +95,9 @@ export default function Results() {
           
           {/* Right Column - Report Preview */}
           {showReport && (
-            <div className="bg-white border border-gray-200 rounded-lg p-6 lg:w-2/3 transition-all duration-500 ease-out bounce-in">
+            <div className="bg-white border border-gray-200 rounded-lg p-6 lg:w-2/3 transition-all duration-500 ease-out bounce-in flex flex-col h-grow">
               <h2 className="text-xl font-semibold text-foreground mb-4">Full Policy Analysis Report</h2>
-              <div className="prose max-w-none h-full overflow-auto">
+              <div className="prose max-w-none flex-grow overflow-auto">
                 <h3>Executive Summary</h3>
                 <p>This policy analysis provides insights into the potential impacts and considerations of the reviewed policy document.</p>
                 

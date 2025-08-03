@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f0f4f2;
   --foreground: #171717;
 }
 
@@ -122,6 +122,22 @@ body {
 
 .hover\:underline:hover {
   text-decoration: underline;
+}
+
+@keyframes breathing-shadow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(110, 231, 183, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(110, 231, 183, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(110, 231, 183, 0.3);
+  }
+}
+
+.animate-breathing-shadow {
+  animation: breathing-shadow 3s infinite;
 }
 
 .mr-4 {
