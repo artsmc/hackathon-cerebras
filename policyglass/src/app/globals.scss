@@ -171,6 +171,21 @@ body {
   animation: breathing-shadow 3s infinite;
 }
 
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.3s ease-out forwards;
+}
+
 .mr-4 {
   margin-right: 1rem;
 }

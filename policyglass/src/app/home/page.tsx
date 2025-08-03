@@ -94,16 +94,18 @@ export default function Home() {
         <main className="flex flex-col gap-8 items-center">
           {/* Hero Section with Background Image and Flow Diagram */}
           <div 
-            className="w-full relative mb-8 animate-breathing-shadow"
+            className="w-full relative mb-8"
             style={{ 
-              backgroundImage: "url('/login.jpg')",
+              backgroundImage: "url('/hero.jpg')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
             }}
           >
-            <div className="py-8 px-8">
-              <h1 className="text-4xl font-bold text-white text-shadow-lg/20 text-center mb-12">Policy Analysis</h1>
+            {/* Dark overlay for background image */}
+            <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="py-8 px-8 relative z-10">
+              <h1 className="text-4xl font-bold text-white text-shadow-lg/20 text-center mb-12">See through <span className="text-lime-300">deceptive</span> terms and <span className="text-lime-300">predatory</span> policies with PolicyGlass.</h1>
               
               {/* Flow Diagram Section */}
               <div className="w-full max-w-6xl mx-auto">
@@ -131,7 +133,7 @@ export default function Home() {
                 </div>
                 
                 {/* Vertical arrow and content div */}
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center fade-in-down">
                   <svg width="20" height="60" viewBox="0 0 20 60" className="text-white">
                     <path d="M10 0 L10 50 M10 50 L5 45 M10 50 L15 45" stroke="currentColor" strokeWidth="3" fill="none" />
                   </svg>
