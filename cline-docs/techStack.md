@@ -4,14 +4,15 @@
 - **Frontend**: Next.js 15.4.5, TypeScript 5+, React 19.1.0
 - **Backend**: Next.js App Router API routes, Node.js
 - **Database**: SQLite, Prisma ORM 6.13.0+
-- **AI Integration**: OpenAI SDK (@ai-sdk/openai), Vercel AI SDK (ai)
-- **Real-time Communication**: WebSocket (ws) for job progress updates
+- **AI Integration**: OpenAI SDK (@ai-sdk/openai), Vercel AI SDK (ai) for research and audit phases
+- **Real-time Communication**: WebSocket (ws) for job progress updates with polling fallback
 - **State Management**: React useState and client-side state
 - **UI Components**: Lucide React icons, Framer Motion for animations
 - **Authentication**: JWT (jose library), bcryptjs for password hashing
 - **API Documentation**: OpenAPI/Swagger integration with @omer-x/next-openapi-route-handler
-- **Background Processing**: Custom job queue system with concurrent processing
+- **Background Processing**: Custom job queue system with concurrent processing and two-phase workflow
 - **Validation**: Zod for runtime type checking and schema validation
+- **User Quota Management**: Custom quota tracking system with daily limits and validation
 
 ## Development Tools
 - **Testing**: Jest, React Testing Library (planned)

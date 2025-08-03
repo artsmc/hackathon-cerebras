@@ -32,6 +32,11 @@ export async function GET(
       );
     }
 
+    // If job is pending, queue it for processing
+    if (jobStatus.status === 'PENDING') {
+      BackgroundProcessorService.queueJob(jobId);
+    }
+
     // Build response with related data
     const response: JobStatusResponse = {
       job: jobStatus

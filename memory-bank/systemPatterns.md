@@ -6,14 +6,15 @@
   - React Server Components for initial data loading and auth checks
   - Client Components for interactive elements and state management
   - Responsive design with Tailwind CSS utility classes
-  - Real-time UI updates via WebSocket integration
+  - Real-time UI updates via WebSocket integration with polling fallback
+  - Toast notifications for user feedback
 
 - **Backend**: Prisma ORM with SQLite database and Next.js API routes
   - Relational database schema with proper entity relationships
   - Type-safe database access through Prisma Client
   - Transaction support for complex operations
   - Connection pooling for performance
-  - Background job processing with queue management
+  - Background job processing with queue management and two-phase workflow
 
 - **Authentication**: Comprehensive JWT-based system
   - Server-side session management with cookie storage
@@ -31,19 +32,20 @@
   - Conditional UI rendering based on roles
 
 - **Job Processing System**: Background processing with real-time updates
-  - PolicyJob model with research and audit phases
-  - Queue management with configurable concurrency
-  - WebSocket communication for real-time progress updates
-  - AI service integration (OpenAI for research, Cerebras for audit)
+  - PolicyJob model with research and audit phases and comprehensive status tracking
+  - Queue management with configurable concurrency (default max 3 jobs)
+  - WebSocket communication for real-time progress updates with polling fallback
+  - AI service integration (OpenAI for research and audit phases)
   - Comprehensive error handling and retry mechanisms
-  - Job expiration and cleanup processes
+  - Job expiration and automatic cleanup processes (24-hour expiration)
+  - User quota management (3 jobs per 24 hours per user)
 
 - **Policy Analysis**: Document storage and reporting system
-  - Policy document storage with metadata
-  - Audit reporting with scores and commentary
-  - Section-by-section analysis results
-  - User dashboard saving functionality
-  - Background processing for AI analysis
+  - Policy document storage with metadata and source URL tracking
+  - Comprehensive audit reporting with structured scoring (0-100) and letter grades (A-E)
+  - Section-by-section analysis results with detailed commentary
+  - User dashboard saving functionality with custom display names and notes
+  - Background processing for AI analysis with confidence scoring
 
 - **API Documentation**: OpenAPI/Swagger integration
   - Zod schema validation for all API endpoints
@@ -52,10 +54,11 @@
   - Postman collection for development testing
 
 - **Real-time Communication**: WebSocket infrastructure
-  - Job progress updates and status notifications
-  - Error reporting and completion alerts
-  - Connection management and cleanup
-  - Fallback to polling for compatibility
+  - Job progress updates and status notifications with structured message types
+  - Connection management and cleanup with ping keep-alive
+  - Fallback to polling for compatibility (3-second intervals)
+  - Connection recovery and state synchronization
+  - Phase-specific update broadcasting (research, audit, completion, errors)
 
 ## Data Flow Architecture
 

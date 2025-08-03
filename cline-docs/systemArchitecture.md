@@ -241,10 +241,10 @@ flowchart TD
 
 ## File Structure
 - **policyglass/src/app/**: Next.js App Router pages and layout components
-  - **home/**: Main landing page with policy analysis input
+  - **home/**: Main landing page with policy analysis input and quota dashboard
   - **login/**: User login interface
   - **register/**: User registration interface
-  - **dashboard/**: Authenticated user dashboard with role-based content
+  - **dashboard/**: Authenticated user dashboard with role-based content and saved reports
   - **admin/**: Administrative dashboard and user management
   - **results/**: Analysis results display with flags, warnings, and toggleable full report view
   - **api-docs/**: API documentation interface
@@ -258,7 +258,7 @@ flowchart TD
     - **jobs/**: Job management endpoints (create, status, cancel)
     - **jobs/[jobId]/**: Individual job status and WebSocket connections
     - **research/**: Policy research endpoints
-  - **health/**: System health monitoring endpoints
+  - **health/**: System health monitoring endpoints with processing statistics
   - **docs/**: API documentation endpoints
 - **policyglass/src/app/controllers/**: Controller layer for handling business logic
   - **auth.controller.ts**: Authentication-related business logic
@@ -271,15 +271,17 @@ flowchart TD
   - **session.service.ts**: Session management and validation operations
   - **audit.service.ts**: Audit logging operations
   - **policy-job.service.ts**: Policy job lifecycle management and database operations
-  - **policy-research.service.ts**: Policy document research and extraction
-  - **policy-audit.service.ts**: Policy audit report generation and analysis
-  - **background-processor.service.ts**: Background job processing orchestration
-  - **websocket.service.ts**: Real-time WebSocket communication management
+  - **policy-research.service.ts**: Policy document research and extraction using OpenAI
+  - **policy-audit.service.ts**: Policy audit report generation and analysis using OpenAI generateObject
+  - **background-processor.service.ts**: Background job processing orchestration with queue management
+  - **websocket.service.ts**: Real-time WebSocket communication management with polling fallback
   - **app-initializer.service.ts**: Application startup and service initialization
+  - **user-quota.service.ts**: User job quota management and validation
+  - **job-logger.service.ts**: Centralized job processing logging and monitoring
 - **policyglass/src/app/components/**: Reusable React components for authentication and UI
 - **policyglass/src/app/lib/**: Utility functions for session management and authentication
-  - **schemas/**: Zod validation schemas for policy audit types
-- **policyglass/src/app/types/**: TypeScript type definitions for policy audit system
+  - **schemas/**: Zod validation schemas for policy audit types and API endpoints
+- **policyglass/src/app/types/**: TypeScript type definitions for policy audit system and job management
 - **policyglass/src/generated/**: Generated Prisma client code
 - **policyglass/prisma/**: Database schema and Prisma configuration
   - **schema.prisma**: Data models for users, sessions, audit logs, policy documents, policy jobs, and analysis results

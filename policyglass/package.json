@@ -28,6 +28,7 @@
     "react-dom": "19.1.0",
     "react-toastify": "^11.0.5",
     "swagger-ui-react": "^5.27.1",
+    "tsx": "^4.20.3",
     "uuid": "^11.1.0",
     "ws": "^8.18.3",
     "zod": "^4.0.14"
