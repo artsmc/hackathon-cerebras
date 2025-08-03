@@ -150,8 +150,7 @@ export default function Home() {
                       
                       <h3 className="font-bold text-white text-lg p-2 bg-emerald-700 text-center">What is your Grading Criteria?</h3>
                       <p className="text-[#323232] p-6 mb-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Our proprietary scoring logic breaks term agreements down and measures them against a detailed rubric to ensure your safety and protection
                       </p>
                       
                       <h3 className="font-bold text-white text-lg p-2  bg-lime-800 text-center">Why use PolicyGlass?</h3>
