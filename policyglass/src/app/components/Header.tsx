@@ -6,13 +6,39 @@ import Link from 'next/link';
 export default function Header() {
   const pathname = usePathname();
   
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (response.ok) {
+        // Redirect to login page after successful logout
+        window.location.href = '/login';
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+  
   return (
     <div className="w-full mb-12">
       {/* Title Bar */}
-      <div className="bg-[#f0f4f2] py-4 px-8">
+      <div className="bg-[#f0f4f2] py-4 px-8 flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           PolicyGlass
         </h1>
+        <button 
+          onClick={handleLogout}
+          className="px-4 py-2 bg-emerald-700 text-white rounded-md font-medium hover:bg-emerald-600 transition-colors duration-300"
+        >
+          Logout
+        </button>
       </div>
       
       {/* Navigation Bar */}
