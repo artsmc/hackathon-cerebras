@@ -154,6 +154,11 @@ export class BackgroundProcessorService {
         await this.processAuditPhase(jobId, jobStatus.policyId);
       } else {
         console.log(`Job ${jobId} is in an unexpected state, skipping`);
+        // Clean up stuck jobs that are in PROCESSING state but not actually processing
+        if (jobStatus.status === JobStatus.PROCESSING) {
+          console.log(`Cleaning up stuck job ${jobId}`);
+          await PolicyJobService.failJob(jobId, 'research', 'Job appears to be stuck - cleaning up');
+        }
       }
 
       const totalTime = Date.now() - startTime;
@@ -204,8 +209,13 @@ export class BackgroundProcessorService {
       );
       WebSocketService.broadcastPhaseUpdate(jobId, startMessage);
 
-      // Perform research
-      const policyId = await PolicyResearchService.researchAndStorePolicy(sourceUrl);
+      // Perform research with timeout
+      const policyId = await Promise.race([
+        PolicyResearchService.researchAndStorePolicy(sourceUrl),
+        new Promise<number>((_, reject) => 
+          setTimeout(() => reject(new Error('Research phase timeout after 5 minutes')), 5 * 60 * 1000)
+        )
+      ]);
       
       const researchDuration = Date.now() - startTime;
       JobLoggerService.logPolicyResearchCompleted(jobId, policyId, researchDuration);
@@ -280,8 +290,13 @@ export class BackgroundProcessorService {
       );
       WebSocketService.broadcastPhaseUpdate(jobId, startMessage);
 
-      // Perform audit
-      const auditResult = await PolicyAuditService.generateAuditReport(policyId);
+      // Perform audit with timeout
+      const auditResult = await Promise.race([
+        PolicyAuditService.generateAuditReport(policyId),
+        new Promise<{ auditReportId: number; confidence: number }>((_, reject) => 
+          setTimeout(() => reject(new Error('Audit phase timeout after 5 minutes')), 5 * 60 * 1000)
+        )
+      ]);
       
       const auditDuration = Date.now() - startTime;
       JobLoggerService.logAuditCompleted(jobId, auditResult.auditReportId, 0, auditDuration); // TODO: Get actual score

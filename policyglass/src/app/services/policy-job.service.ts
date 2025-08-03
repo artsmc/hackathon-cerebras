@@ -243,7 +243,10 @@ export class PolicyJobService {
     try {
       const jobs = await prisma.policyJob.findMany({
         where: {
-          status: JobStatus.PENDING
+          OR: [
+            { status: JobStatus.PENDING },
+            { status: JobStatus.PROCESSING }
+          ]
         },
         orderBy: {
           created_at: 'asc'
