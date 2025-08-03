@@ -7,18 +7,22 @@
 - **State Management**: React useState and client-side state
 - **UI Components**: Lucide React icons, Framer Motion for animations
 - **Authentication**: JWT (jose library), bcryptjs for password hashing
+- **API Documentation**: OpenAPI/Swagger integration with @omer-x/next-openapi-route-handler
 
 ## Development Tools
 - **Testing**: Jest, React Testing Library (planned)
 - **CI/CD**: GitHub Actions (planned)
 - **Linting**: ESLint 9+, Next.js linting
 - **Documentation**: Mermaid.js diagrams, Markdown documentation
-- **Styling**: Sass (globals.scss) - primary styling approach
+- **Styling**: Tailwind CSS 4.0+ with Sass for custom variables
 
 ## Dependencies
 ```json
 {
   "dependencies": {
+    "@omer-x/next-openapi-json-generator": "^2.0.2",
+    "@omer-x/next-openapi-route-handler": "^2.0.0",
+    "@types/swagger-ui-react": "^5.18.0",
     "bcryptjs": "^3.0.2",
     "framer-motion": "^12.23.12",
     "jose": "^6.0.12",
@@ -27,6 +31,7 @@
     "next": "15.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "swagger-ui-react": "^5.27.1",
     "uuid": "^11.1.0",
     "zod": "^4.0.14"
   },
@@ -56,4 +61,6 @@
 - Server Components for data fetching and authentication checks
 - Prisma schema-first database design
 - Role-Based Access Control (RBAC) pattern
+- Controller-Service architecture pattern for separation of concerns
 - Responsive design with mobile-first approach
+- API route handlers with OpenAPI documentation generation
