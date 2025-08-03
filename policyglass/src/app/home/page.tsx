@@ -3,6 +3,7 @@
 import Header from "../components/Header";
 import AuthCheck from "../components/AuthCheck";
 import QuotaDashboard from "../components/QuotaDashboard";
+import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import { useState } from "react";
 import { QuotaClientService } from "../services/quota-client.service";
 import { ToastService } from "../services/toast.service";
@@ -138,7 +139,7 @@ export default function Home() {
                     <path d="M10 0 L10 50 M10 50 L5 45 M10 50 L15 45" stroke="currentColor" strokeWidth="3" fill="none" />
                   </svg>
                   
-                  <div className="bg-white shadow-md shadow-[#EAEAEA] rounded-[16px] w-full max-w-2xl shadow-lg mt-4">
+                  <div className="bg-white rounded-[16px] w-full max-w-2xl shadow-lg mt-4">
                     <div className="text-foreground">
                       <h3 className="font-bold text-white text-lg p-2 rounded-t-[16px] bg-lime-800 text-center">How does PolicyGlass work?</h3>
                       <p className="text-[#323232] p-6 mb-4">
@@ -164,8 +165,11 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Testimonials Carousel */}
+          <TestimonialsCarousel />
+
           {/* Coming Soon Banner */}
-          <div className="w-full bg-emerald-500 py-4 text-center text-white font-bold text-xl">
+          <div className="w-full bg-lime-700 py-4 text-center text-white font-bold text-xl">
             Coming Soon
           </div>
 
