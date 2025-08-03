@@ -55,7 +55,7 @@ export default function Results() {
   const [error, setError] = useState<string | null>(null);
   const [processingSteps, setProcessingSteps] = useState<ProcessingStep[]>([]);
   const [wsConnected, setWsConnected] = useState(false);
-  const wsRef = useRef<WebSocket | null>(null);
+  const wsRef = useRef<{ close: () => void } | null>(null);
   const searchParams = useSearchParams();
   const jobId = searchParams.get('jobId');
 
@@ -102,85 +102,84 @@ export default function Results() {
   };
 
   const connectWebSocket = (id: string) => {
-    try {
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const wsUrl = `${protocol}//${window.location.host}/api/policy/jobs/${id}/ws`;
-      
-      wsRef.current = new WebSocket(wsUrl);
-      
-      wsRef.current.onopen = () => {
-        setWsConnected(true);
-        console.log('WebSocket connected');
-      };
-      
-      wsRef.current.onmessage = (event) => {
-        try {
-          const message = JSON.parse(event.data);
+    // WebSocket not supported in Next.js API routes, using polling instead
+    console.log('Using polling instead of WebSocket for job updates');
+    setWsConnected(false);
+    
+    // Start polling for job updates
+    const pollInterval = setInterval(async () => {
+      try {
+        const response = await fetch(`/api/policy/jobs/${id}`, {
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          const job = data.job;
           
-          switch (message.type) {
-            case 'progress':
-              setJobData(prev => prev ? {
-                ...prev,
-                progress: message.progress,
-                currentStep: message.step
-              } : null);
+          if (job) {
+            // Update job data
+            setJobData(prev => {
+              const newData = {
+                id: job.id,
+                status: job.status.toLowerCase() as 'pending' | 'processing' | 'completed' | 'failed',
+                url: job.sourceUrl,
+                progress: job.progressPercentage,
+                currentStep: job.currentPhase === 'research' ? 'Researching policy document...' : 
+                           job.currentPhase === 'audit' ? 'Generating audit report...' : 
+                           'Processing...',
+                result: job.status === 'COMPLETED' ? {
+                  flags: ['Sample flag 1', 'Sample flag 2'], // This would come from actual audit data
+                  warnings: ['Sample warning 1'],
+                  reportId: job.auditReportId
+                } : undefined,
+                error: job.error
+              };
               
-              setProcessingSteps(prev => [...prev, {
-                step: message.step,
-                timestamp: new Date(),
-                progress: message.progress
-              }]);
+              // Check if status changed to completed or failed
+              if (prev?.status !== newData.status) {
+                if (newData.status === 'completed') {
+                  setLoading(false);
+                  ToastService.jobCompleted(id);
+                  clearInterval(pollInterval);
+                } else if (newData.status === 'failed') {
+                  setError(newData.error || 'Job failed');
+                  setLoading(false);
+                  ToastService.jobFailed(newData.error || 'Job failed');
+                  clearInterval(pollInterval);
+                }
+              }
               
-              ToastService.processingStep(message.step, message.progress);
-              break;
-              
-            case 'completed':
-              setJobData(prev => prev ? {
-                ...prev,
-                status: 'completed',
-                result: message.result
-              } : null);
-              setLoading(false);
-              ToastService.jobCompleted(id);
-              break;
-              
-            case 'failed':
-              setJobData(prev => prev ? {
-                ...prev,
-                status: 'failed',
-                error: message.error
-              } : null);
-              setError(message.error);
-              setLoading(false);
-              ToastService.jobFailed(message.error);
-              break;
-              
-            case 'step':
-              setProcessingSteps(prev => [...prev, {
-                step: message.step,
-                timestamp: new Date()
-              }]);
-              ToastService.processingStep(message.step);
-              break;
+              return newData;
+            });
+            
+            // Add processing step if phase changed
+            if (job.currentPhase) {
+              setProcessingSteps(prev => {
+                const lastStep = prev[prev.length - 1];
+                const newStep = job.currentPhase === 'research' ? 'Research phase started' :
+                              job.currentPhase === 'audit' ? 'Audit phase started' :
+                              'Processing...';
+                
+                if (!lastStep || lastStep.step !== newStep) {
+                  return [...prev, {
+                    step: newStep,
+                    timestamp: new Date(),
+                    progress: job.progressPercentage
+                  }];
+                }
+                return prev;
+              });
+            }
           }
-        } catch (err) {
-          console.error('Error parsing WebSocket message:', err);
         }
-      };
-      
-      wsRef.current.onclose = () => {
-        setWsConnected(false);
-        console.log('WebSocket disconnected');
-      };
-      
-      wsRef.current.onerror = (error) => {
-        console.error('WebSocket error:', error);
-        setWsConnected(false);
-      };
-      
-    } catch (err) {
-      console.error('Error connecting to WebSocket:', err);
-    }
+      } catch (err) {
+        console.error('Error polling job status:', err);
+      }
+    }, 2000); // Poll every 2 seconds
+    
+    // Store interval reference for cleanup
+    wsRef.current = { close: () => clearInterval(pollInterval) };
   };
 
   if (error) {

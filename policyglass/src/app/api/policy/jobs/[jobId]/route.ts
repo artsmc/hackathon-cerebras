@@ -10,10 +10,10 @@ import { JobStatusResponse } from '../../../../types/policy-audit.types';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { jobId: string } }
+  { params }: { params: Promise<{ jobId: string }> }
 ): Promise<NextResponse> {
   try {
-    const { jobId } = params;
+    const { jobId } = await params;
 
     if (!jobId) {
       return NextResponse.json(
@@ -68,7 +68,7 @@ export async function GET(
     return NextResponse.json(response);
 
   } catch (error) {
-    console.error(`Failed to get job status for ${params.jobId}:`, error);
+    console.error(`Failed to get job status:`, error);
     return NextResponse.json(
       { 
         error: 'Failed to retrieve job status',
@@ -85,10 +85,10 @@ export async function GET(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { jobId: string } }
+  { params }: { params: Promise<{ jobId: string }> }
 ): Promise<NextResponse> {
   try {
-    const { jobId } = params;
+    const { jobId } = await params;
 
     if (!jobId) {
       return NextResponse.json(
@@ -130,7 +130,7 @@ export async function DELETE(
     }
 
   } catch (error) {
-    console.error(`Failed to cancel job ${params.jobId}:`, error);
+    console.error(`Failed to cancel job:`, error);
     return NextResponse.json(
       { 
         error: 'Failed to cancel job',
