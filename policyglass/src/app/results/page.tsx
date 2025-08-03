@@ -66,7 +66,6 @@ export default function Results() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [processingSteps, setProcessingSteps] = useState<ProcessingStep[]>([]);
-  const [wsConnected, setWsConnected] = useState(false);
   const wsRef = useRef<{ close: () => void } | null>(null);
   const searchParams = useSearchParams();
   const jobId = searchParams.get('jobId');
@@ -190,7 +189,6 @@ export default function Results() {
   const connectWebSocket = (id: string) => {
     // WebSocket not supported in Next.js API routes, using polling instead
     console.log('Using polling instead of WebSocket for job updates');
-    setWsConnected(false);
     
     // Start polling for job updates
     const pollInterval = setInterval(async () => {
@@ -333,11 +331,6 @@ export default function Results() {
               </div>
             )}
             
-            {/* WebSocket Status */}
-            <div className="flex items-center justify-center space-x-2 text-sm text-gray-500 mb-6">
-              <div className={`w-2 h-2 rounded-full ${wsConnected ? 'bg-green-500' : 'bg-red-500'}`}></div>
-              <span>{wsConnected ? 'Connected' : 'Disconnected'}</span>
-            </div>
             
             {/* Processing Steps */}
             {processingSteps.length > 0 && (
