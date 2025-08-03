@@ -88,6 +88,11 @@ ${policyText}`,
         temperature: 0.3, // Lower temperature for more consistent scoring
       });
 
+      // Add confidence field if missing (default to 0.8)
+      if (object.confidence === undefined) {
+        object.confidence = 0.8;
+      }
+
       // Validate and calculate total score
       const calculatedTotal = this.calculateTotalScore(object.sections);
       const calculatedGrade = calculateLetterGrade(calculatedTotal);

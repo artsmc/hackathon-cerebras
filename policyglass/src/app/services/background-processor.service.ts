@@ -152,13 +152,13 @@ export class BackgroundProcessorService {
                  jobStatus.auditStatus === JobStatus.PENDING && 
                  jobStatus.policyId) {
         await this.processAuditPhase(jobId, jobStatus.policyId);
+      } else if (jobStatus.researchStatus === JobStatus.COMPLETED && 
+                 jobStatus.auditStatus === JobStatus.PENDING) {
+        // Research completed but no policy ID - this shouldn't happen, but let's handle it
+        console.log(`Job ${jobId} has completed research but no policy ID, skipping`);
       } else {
         console.log(`Job ${jobId} is in an unexpected state, skipping`);
-        // Clean up stuck jobs that are in PROCESSING state but not actually processing
-        if (jobStatus.status === JobStatus.PROCESSING) {
-          console.log(`Cleaning up stuck job ${jobId}`);
-          await PolicyJobService.failJob(jobId, 'research', 'Job appears to be stuck - cleaning up');
-        }
+        console.log(`Current state - Status: ${jobStatus.status}, Research: ${jobStatus.researchStatus}, Audit: ${jobStatus.auditStatus}, Policy ID: ${jobStatus.policyId}`);
       }
 
       const totalTime = Date.now() - startTime;
