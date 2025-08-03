@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import defineRoute from '@omer-x/next-openapi-route-handler';
 
 // Import schemas
-import { LogoutResponseSchema } from '@/app/lib/openapi/schemas';
+// import { LogoutResponseSchema } from '@/app/lib/openapi/schemas';
 
 export const { POST } = defineRoute({
   operationId: 'logoutUser',

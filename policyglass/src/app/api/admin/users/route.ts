@@ -1,13 +1,12 @@
 import { AdminController } from '@/app/controllers/admin.controller';
 import { getSession } from '@/app/lib/session';
-import { z } from 'zod';
+// import { z } from 'zod';
 import defineRoute from '@omer-x/next-openapi-route-handler';
 
 // Import schemas
 import { 
-  GetAllUsersResponseSchema, 
   UpdateUserRoleRequestSchema, 
-  UpdateUserRoleResponseSchema 
+   
 } from '@/app/lib/openapi/schemas';
 
 // GET - Get all users (admin only)
@@ -25,10 +24,10 @@ export const { GET } = defineRoute({
       return new Response(JSON.stringify({ error: 'Unauthorized access' }), { status: 403 });
     }
 
-    const request = new Request('http://localhost/api/admin/users', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    // const request = new Request('http://localhost/api/admin/users', {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' },
+    // });
     
     const result = await AdminController.getAllUsers();
     
