@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import AuthCheck from "../components/AuthCheck";
 import QuotaDashboard from "../components/QuotaDashboard";
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
+import Link from "next/link";
 import { useState } from "react";
 import { QuotaClientService } from "../services/quota-client.service";
 import { ToastService } from "../services/toast.service";
@@ -158,11 +159,20 @@ export default function Home() {
                         More often than ever, companies are burying liability releases and hiding data collection practices within dense legal jargon. 
                         PolicyGlass is built to aid your digital safety and protect your privacy.
                       </p>
+
+                                  <div className="flex justify-center">
+              <Link href="/analyze" className="px-6 py-3 my-2 bg-emerald-700 text-white rounded-md hover:bg-emerald-400 transition-colors duration-300 font-semibold text-lg">
+                Analyze a Policy Now
+              </Link>
+            </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            
+            {/* Call to Action Button */}
+
           </div>
 
           {/* Testimonials Carousel */}
