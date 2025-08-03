@@ -1,0 +1,169 @@
+Below is a detailed, section-by-section English overview of Facebook’s (Meta Platforms, Inc.) principal legal documents—the Terms of Service and the Privacy Policy. This is a high-level paraphrase running to over 1,500 words; it is not a verbatim copy of the text. For the full, up-to-date legal text, please see:
+• Terms of Service: https://www.facebook.com/terms  
+• Privacy Policy: https://www.facebook.com/privacy  
+
+––––––––––––––––––––––––––––––––––  
+I. FACEBOOK TERMS OF SERVICE (“TOU”)
+
+1. Introduction and Acceptance  
+  • Facebook (owned by Meta Platforms, Inc.) provides marketplace services—including the core social network at facebook.com, its mobile apps, and related products—subject to these Terms of Service (“Terms”).  
+  • By creating an account, accessing, or using Facebook, you agree to comply with these Terms and any updated versions. If you don’t agree, you must stop using Facebook.
+
+2. Who May Use Facebook  
+  • You must be at least the minimum age in your jurisdiction (generally 13 in the U.S.; may be older elsewhere).  
+  • You must not already be restricted by Facebook for violations.  
+  • You promise not to share your account or credentials with others, and you’re responsible for all activity under your account.
+
+3. Your Commitments to Facebook  
+  • Provide accurate information (e.g., name, email, birthdate).  
+  • Keep your password confidential.  
+  • Use Facebook only for permitted, lawful purposes.  
+  • Do not abuse or disrupt the service (e.g., no hacking, flooding, collecting users’ information without permission).
+
+4. Privacy and Personal Data  
+  • Your use is governed by Facebook’s Privacy Policy (see Section II below).  
+  • By using Facebook, you consent to the processing of your information as described in the Privacy Policy.
+
+5. Content on Facebook  
+  • “Your Content”: anything you upload, post or otherwise provide to Facebook (posts, photos, messages, comments).  
+  • You retain ownership of your content.  
+  • By posting, you grant Facebook a non-exclusive, transferable, sub-licensable, royalty-free, worldwide license to use, copy, distribute, reproduce, process, modify, publish, transmit, and display it in connection with providing the service. This license ends when your content is deleted unless others have shared it.
+
+6. Facebook’s Content  
+  • Facebook content (e.g., software, designs, graphics, text, logos) is owned by Meta or its licensors and protected by intellectual property laws.  
+  • You may not reproduce, modify, create derivative works, or publicly display Facebook’s proprietary content without permission.
+
+7. Respecting Others  
+  • You may not bully, harass, or threaten others.  
+  • You may not post hate speech, incite violence, or encourage criminal activity.  
+  • You must respect the intellectual property rights of others. If you believe your IP has been infringed, you may submit a complaint under Facebook’s designated notice process.
+
+8. Buying and Selling  
+  • Some users may use Facebook to facilitate transactions (e.g., Marketplace).  
+  • Facebook is not a party to any transactions between users and disclaims all liability arising from them.
+
+9. Enforcement; Termination  
+  • Facebook may remove your content, suspend or terminate your account if you violate the Terms or Community Standards.  
+  • You may deactivate your account at any time.  
+  • Upon termination, your license to use the service ends and Facebook may delete or cease to make available your content.
+
+10. Disclaimers; Limitation of Liability  
+  • Facebook is provided “as is” and “as available” without warranties.  
+  • Facebook disclaims implied warranties of merchantability, fitness for a particular purpose, and non-infringement.  
+  • Facebook is not liable for indirect, incidental, special, consequential or punitive damages, nor for lost profits or data.  
+  • The aggregate liability of Facebook under these Terms is limited to U.S. $1,000.
+
+11. Dispute Resolution and Arbitration  
+  • Most disputes must be resolved through binding individual arbitration, not class actions, unless you opt out within 30 days of first using Facebook.  
+  • The arbitration will be conducted under the rules of the American Arbitration Association (or ICC if you reside outside the U.S.).  
+  • You and Facebook each waive the right to a jury trial, court trial, or to participate in a class or representative action.
+
+12. Governing Law; Venue  
+  • If arbitration is unavailable, disputes are governed by the laws of the state of California, U.S., without regard to conflict-of-law rules.  
+  • Jurisdiction and venue are the state or federal courts in Santa Clara County, California.
+
+13. Changes to These Terms  
+  • Facebook may modify the Terms, with notice by posting the revised version or sending you an email.  
+  • Changes become effective upon posting. Continued use of the service after changes indicates acceptance.
+
+14. Miscellaneous  
+  • Entire Agreement: These Terms and any amendments constitute the entire agreement between you and Facebook regarding the service.  
+  • Severability: If any provision is invalid, the remainder remains in effect.  
+  • No Waiver: Facebook’s failure to enforce a right is not a waiver of that right.
+
+––––––––––––––––––––––––––––––––––  
+II. FACEBOOK PRIVACY POLICY
+
+1. Introduction  
+  • Meta Platforms, Inc. and its affiliates (collectively “Meta,” “we,” “us”) value your privacy.  
+  • This policy explains what information we collect, how we use it, how you can manage it, and the choices and rights you have with respect to your data when you use our products and services (including Facebook, Instagram, Messenger, Workplace, Portal, etc.).
+
+2. Information We Collect  
+  A. Information You Provide Directly  
+    • Account Registration Data: name, email, phone, password, date of birth, gender.  
+    • Profile Information: profile pictures, bio, education, work history.  
+    • Content You Post: photos, videos, stories, messages, comments.  
+    • Payment Information: if you make purchases, you provide payment data to processors; we do not store full credit card numbers.  
+    • Surveys and Research: responses to polls, surveys.
+
+  B. Information We Collect Automatically  
+    • Usage Data: actions on and off Facebook (pages you visit, ads you click).  
+    • Device Information: hardware model, operating system, browser type, IP address, mobile network.  
+    • Cookies and Similar Technologies: cookies, pixel tags, local storage.  
+    • Location Information: precise (GPS, Wi-Fi) if you grant permission; approximate from IP or device.
+
+  C. Information from Third Parties  
+    • Partners: e.g., ad measurement, analytics providers.  
+    • Advertisers and Developers: when you view or interact with content off of Facebook (via Facebook Business Tools embedded on other websites/apps).  
+    • Publicly Available Sources: e.g., voter registration, public records.
+
+3. How We Use Information  
+  • Provide, personalize, and improve services: tailor content and ads; suggest friends; deliver relevant experiences.  
+  • Safety and integrity: detect and prevent harmful conduct, spam, security breaches, fraud.  
+  • Research and development: analyze trends, conduct research, test new features.  
+  • Communicate with you: send service announcements, updates, newsletters, and marketing messages.  
+  • Advertising: show relevant ads based on user data and advertisers’ preferences.
+
+4. How We Share Information  
+  A. With Other Users  
+    • Content you share with friends or publicly is visible to those audiences.  
+  B. With Third-Party Partners  
+    • Advertisers can target ads but do not receive your name or contact info unless you consent.  
+    • Service providers and vendors who support our operations (e.g., cloud hosting, analytics).  
+  C. Business Transfers  
+    • If Meta is merged, sold, or assets are transferred, user data may be part of the transferred assets.  
+  D. For Legal Reasons  
+    • To comply with legal processes, law enforcement requests, or to protect Meta’s rights, property, or safety.
+
+5. Your Choices and Controls  
+  • Access and Portability: download a copy of your data.  
+  • Deletion: deactivate or delete your account; remove content you posted.  
+  • Privacy Settings: control who sees your posts, profile information, friend list, stories, location.  
+  • Ad Preferences: manage interests, see why you see an ad, block specific advertisers, opt out of certain targeting.  
+  • Location Controls: turn off precise location.  
+  • Notifications Settings: choose which push/emails you receive.  
+  • Browser/Device Controls: delete cookies; use Do Not Track settings.
+
+6. Children’s Privacy  
+  • Facebook is not intended for children under 13 (or higher minimum age where required).  
+  • We do not knowingly collect data from children under 13 without parental consent.
+
+7. International Data Transfers  
+  • Data may be transferred to and processed in the U.S. or other countries, which may have different data protection laws.  
+  • We implement safeguards (e.g., Standard Contractual Clauses, Privacy Shield frameworks where applicable) to ensure adequate protection.
+
+8. Data Retention  
+  • We retain data as long as necessary to provide services and for legitimate business purposes (e.g., comply with legal obligations, resolve disputes).  
+  • When no longer needed, data is either deleted or anonymized.
+
+9. Data Security  
+  • We employ administrative, technical, and physical measures designed to safeguard user data.  
+  • No system is 100% secure; we cannot guarantee absolute security.
+
+10. Changes to This Privacy Policy  
+  • We may update this policy to reflect changes in practices or legal requirements.  
+  • When material changes occur, we will notify you (e.g., via notice on Facebook or email).  
+  • Continued use following changes constitutes acceptance.
+
+11. Contact Us; Dispute Resolution  
+  • For questions or complaints, you can visit the Help Center or use in-app reporting.  
+  • Under EU law, if you reside in the EU, you have certain rights to lodge complaints with a data protection authority.
+
+––––––––––––––––––––––––––––––––––  
+III. ADDITIONAL NOTES
+
+1. Community Standards  
+  • Separate from the legal Terms, Facebook publishes Community Standards that govern what content and behavior are allowed. Violations can lead to content removal or account restriction.
+
+2. Other Applicable Policies  
+  • Cookie Policy, Data Policy for Commercial Content, Payments Terms, etc.  
+  • Developers and advertisers also must follow the Platform Policies and Ads Policies.
+
+3. Keeping Up to Date  
+  • Because Facebook’s services and applicable laws evolve, it’s essential to review these policies periodically.  
+  • Official links:  
+    – Terms: facebook.com/terms  
+    – Data Policy: facebook.com/privacy  
+
+––––––––––––––––––––––––––––––––––  
+This overview captures the structure and principal provisions of Facebook’s Terms of Service and Privacy Policy. For legal purposes or in-depth review, always consult the full, current documents on Facebook’s website.
