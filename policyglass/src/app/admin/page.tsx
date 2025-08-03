@@ -1,4 +1,5 @@
 import { verifySession, isAdmin } from '../lib/session'
+import Link from 'next/link'
 
 export default async function AdminDashboardPage() {
   const session = await verifySession()
@@ -16,12 +17,12 @@ export default async function AdminDashboardPage() {
             You must be an administrator to access this page.
           </p>
           <div className="flex gap-4">
-            <a 
+            <Link 
               className="rounded-full border border-solid border-transparent transition-all duration-300 flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] hover:scale-105 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
               href="/dashboard"
             >
               Back to Dashboard
-            </a>
+            </Link>
           </div>
         </main>
       </div>
@@ -49,34 +50,34 @@ export default async function AdminDashboardPage() {
               <div className="p-6 border border-gray-300 rounded-lg bg-blue-50 hover:shadow-lg transition-shadow">
                 <h3 className="text-lg font-medium text-foreground mb-2">User Management</h3>
                 <p className="text-foreground text-sm mb-4">Manage user accounts, roles, and permissions</p>
-                <a 
+                <Link 
                   className="text-blue-600 hover:underline text-sm font-medium"
                   href="/admin/users"
                 >
                   View Users →
-                </a>
+                </Link>
               </div>
               
               <div className="p-6 border border-gray-300 rounded-lg bg-blue-50 hover:shadow-lg transition-shadow">
                 <h3 className="text-lg font-medium text-foreground mb-2">System Settings</h3>
                 <p className="text-foreground text-sm mb-4">Configure application-wide settings</p>
-                <a 
+                <Link 
                   className="text-blue-600 hover:underline text-sm font-medium"
                   href="/admin/settings"
                 >
                   Configure →
-                </a>
+                </Link>
               </div>
               
               <div className="p-6 border border-gray-300 rounded-lg bg-blue-50 hover:shadow-lg transition-shadow">
                 <h3 className="text-lg font-medium text-foreground mb-2">Audit Logs</h3>
                 <p className="text-foreground text-sm mb-4">View security events and user activity</p>
-                <a 
+                <Link 
                   className="text-blue-600 hover:underline text-sm font-medium"
                   href="/admin/logs"
                 >
                   View Logs →
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -84,18 +85,18 @@ export default async function AdminDashboardPage() {
         
         {/* Navigation */}
         <div className="flex gap-4 justify-center">
-          <a 
+          <Link 
             className="rounded-full border border-solid border-transparent transition-all duration-300 flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] hover:scale-105 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
             href="/dashboard"
           >
             Back to Dashboard
-          </a>
-          <a 
+          </Link>
+          <Link 
             className="rounded-full border border-solid border-transparent transition-all duration-300 flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] hover:scale-105 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
             href="/api/auth/logout"
           >
             Logout
-          </a>
+          </Link>
         </div>
       </main>
     </div>

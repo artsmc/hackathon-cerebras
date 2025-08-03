@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Flag, AlertTriangle, FileText } from "lucide-react";
 import Header from "../components/Header";
+import Link from "next/link";
 
 const bounceInAnimation = `
   @keyframes bounceIn {
@@ -47,7 +48,7 @@ export default function Results() {
         
         <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl mx-auto h-80vh">
           {/* Left Column - Flags and Warnings */}
-          <div className={`bg-white border border-gray-200 rounded-lg p-6 transition-all duration-500 ease-out flex flex-col h-full ${showReport ? 'lg:w-1/3 transform' : 'lg:w-full'}`}>
+          <div className={`bg-white border border-gray-200 rounded-[16px] p-6 transition-all duration-500 ease-out flex flex-col h-full ${showReport ? 'lg:w-1/3 transform' : 'lg:w-full'}`}>
             <div className="flex flex-col items-center justify-center">
               <div className="text-center mb-6">
                 <div className="inline-block p-3 rounded-full bg-gray-100 mb-4">
@@ -95,7 +96,7 @@ export default function Results() {
           
           {/* Right Column - Report Preview */}
           {showReport && (
-            <div className="bg-white border border-gray-200 rounded-lg p-6 lg:w-2/3 transition-all duration-500 ease-out bounce-in flex flex-col h-grow">
+            <div className="bg-white border border-gray-200 rounded-[16px] p-6 lg:w-2/3 transition-all duration-500 ease-out bounce-in flex flex-col h-grow">
               <h2 className="text-xl font-semibold text-foreground mb-4">Full Policy Analysis Report</h2>
               <div className="prose max-w-none flex-grow overflow-auto">
                 <h3>Executive Summary</h3>
@@ -126,12 +127,12 @@ export default function Results() {
         
         {/* Back to Home Button */}
         <div className="flex gap-4 mt-8 justify-center">
-          <a 
+          <Link 
             className="rounded-full border border-solid border-transparent transition-all duration-300 flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] hover:scale-105 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
             href="/home"
           >
             Back to Home
-          </a>
+          </Link>
         </div>
       </main>
     </div>

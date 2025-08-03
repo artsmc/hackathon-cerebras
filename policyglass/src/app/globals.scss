@@ -124,6 +124,37 @@ body {
   text-decoration: underline;
 }
 
+/* Page transition animations */
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.page-transition-out {
+  animation: slideOutLeft 0.3s ease-in-out forwards;
+}
+
+.page-transition-in {
+  animation: slideInRight 0.3s ease-in-out forwards;
+}
+
 @keyframes breathing-shadow {
   0% {
     box-shadow: 0 0 0 0 rgba(110, 231, 183, 0.3);

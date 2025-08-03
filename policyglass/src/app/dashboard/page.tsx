@@ -1,5 +1,6 @@
 import { verifySession, isAdmin } from '../lib/session'
 import Header from '../components/Header'
+import Link from 'next/link'
 
 export default async function DashboardPage() {
   const session = await verifySession()
@@ -65,26 +66,26 @@ export default async function DashboardPage() {
         
             {/* Navigation */}
             <div className="flex gap-4 justify-center">
-              <a 
+              <Link 
                 className="rounded-full border border-solid border-transparent transition-all duration-300 flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] hover:scale-105 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
                 href="/home"
               >
                 Back to Home
-              </a>
+              </Link>
               {userIsAdmin && (
-                <a 
+                <Link 
                   className="rounded-full border border-solid border-transparent transition-all duration-300 flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] hover:scale-105 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
                   href="/admin"
                 >
                   Admin Dashboard
-                </a>
+                </Link>
               )}
-              <a 
+              <Link 
                 className="rounded-full border border-solid border-transparent transition-all duration-300 flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] hover:scale-105 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
                 href="/api/auth/logout"
               >
                 Logout
-              </a>
+              </Link>
             </div>
       </main>
     </div>

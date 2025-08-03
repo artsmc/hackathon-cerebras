@@ -20,9 +20,16 @@ export default function Home() {
 
   // State to track which animation should be displayed
   const [currentAnimation, setCurrentAnimation] = useState(0);
+  const [isClient, setIsClient] = useState(false);
 
   // Handle animation sequence progression
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+    
     // Progress to the next animation after a delay
     const animationTimer = setTimeout(() => {
       if (currentAnimation < 2) { // Only progress through first two animations
@@ -31,7 +38,7 @@ export default function Home() {
     }, 2000); // Show each animation for 2 seconds
 
     return () => clearTimeout(animationTimer);
-  }, [currentAnimation]);
+  }, [currentAnimation, isClient]);
 
   return (
     <AuthCheck>
