@@ -2,6 +2,7 @@ import { PolicyJobService } from './policy-job.service';
 import { PolicyResearchService } from './policy-research.service';
 import { PolicyAuditService } from './policy-audit.service';
 import { WebSocketService } from './websocket.service';
+import { JobLoggerService } from './job-logger.service';
 import { JobStatus } from '../lib/schemas/policy-audit.schema';
 import { ResearchError, AuditError } from '../types/policy-audit.types';
 
@@ -21,11 +22,13 @@ export class BackgroundProcessorService {
   static startProcessing(): void {
     if (this.isProcessing) {
       console.log('Background processor already running');
+      JobLoggerService.logProcessorStartup();
       return;
     }
 
     this.isProcessing = true;
     console.log('Starting background processor...');
+    JobLoggerService.logProcessorStartup();
     
     // Start the main processing loop
     this.processLoop();
@@ -52,6 +55,8 @@ export class BackgroundProcessorService {
     if (!this.processingQueue.includes(jobId) && !this.activeJobs.has(jobId)) {
       this.processingQueue.push(jobId);
       console.log(`Job ${jobId} queued for processing. Queue length: ${this.processingQueue.length}`);
+      JobLoggerService.logJobQueued(jobId, this.processingQueue.length);
+      JobLoggerService.logQueueStats(this.processingQueue.length, this.activeJobs.size, this.maxConcurrentJobs);
     }
   }
 
@@ -120,7 +125,9 @@ export class BackgroundProcessorService {
    * @param jobId - Job identifier
    */
   private static async processJob(jobId: string): Promise<void> {
+    const startTime = Date.now();
     console.log(`Starting processing for job ${jobId}`);
+    JobLoggerService.logJobQueued(jobId, 0); // Processing started
     
     try {
       // Validate job exists and is not expired
@@ -148,8 +155,12 @@ export class BackgroundProcessorService {
         console.log(`Job ${jobId} is in an unexpected state, skipping`);
       }
 
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logJobCompleted(jobId, totalTime);
+
     } catch (error) {
       console.error(`Error processing job ${jobId}:`, error);
+      JobLoggerService.logJobFailed(jobId, 'unknown', error as Error);
       
       // Determine which phase failed and update accordingly
       const jobStatus = await PolicyJobService.getJobStatus(jobId);
@@ -175,7 +186,9 @@ export class BackgroundProcessorService {
    * @param sourceUrl - URL to research
    */
   private static async processResearchPhase(jobId: string, sourceUrl: string): Promise<void> {
+    const startTime = Date.now();
     console.log(`Starting research phase for job ${jobId}`);
+    JobLoggerService.logResearchStarted(jobId, sourceUrl);
     
     try {
       // Start research phase
@@ -192,6 +205,9 @@ export class BackgroundProcessorService {
 
       // Perform research
       const policyId = await PolicyResearchService.researchAndStorePolicy(sourceUrl);
+      
+      const researchDuration = Date.now() - startTime;
+      JobLoggerService.logPolicyResearchCompleted(jobId, policyId, researchDuration);
       
       // Complete research phase (using default confidence of 0.8 for now)
       await PolicyJobService.completeResearchPhase(
@@ -220,6 +236,7 @@ export class BackgroundProcessorService {
 
     } catch (error) {
       console.error(`Research phase failed for job ${jobId}:`, error);
+      JobLoggerService.logJobFailed(jobId, 'research', error as Error);
       
       await PolicyJobService.failJob(jobId, 'research', error instanceof Error ? error.message : 'Research failed');
       
@@ -245,7 +262,9 @@ export class BackgroundProcessorService {
    * @param policyId - Policy ID to audit
    */
   private static async processAuditPhase(jobId: string, policyId: number): Promise<void> {
+    const startTime = Date.now();
     console.log(`Starting audit phase for job ${jobId}, policy ID: ${policyId}`);
+    JobLoggerService.logAuditStarted(jobId, policyId);
     
     try {
       // Start audit phase
@@ -262,6 +281,9 @@ export class BackgroundProcessorService {
 
       // Perform audit
       const auditResult = await PolicyAuditService.generateAuditReport(policyId);
+      
+      const auditDuration = Date.now() - startTime;
+      JobLoggerService.logAuditCompleted(jobId, auditResult.auditReportId, 0, auditDuration); // TODO: Get actual score
       
       // Complete audit phase
       await PolicyJobService.completeAuditPhase(
@@ -303,6 +325,7 @@ export class BackgroundProcessorService {
 
     } catch (error) {
       console.error(`Audit phase failed for job ${jobId}:`, error);
+      JobLoggerService.logJobFailed(jobId, 'audit', error as Error);
       
       await PolicyJobService.failJob(jobId, 'audit', error instanceof Error ? error.message : 'Audit failed');
       

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AppInitializerService } from '../../services/app-initializer.service';
+import { BackgroundProcessorService } from '../../services/background-processor.service';
 
 /**
  * GET /api/health
@@ -8,12 +9,14 @@ import { AppInitializerService } from '../../services/app-initializer.service';
 export async function GET(): Promise<NextResponse> {
   try {
     const healthStatus = AppInitializerService.getHealthStatus();
+    const processorStats = BackgroundProcessorService.getProcessingStats();
     
     return NextResponse.json({
       status: 'healthy',
       service: 'PolicyGlass',
       version: '1.0.0',
-      ...healthStatus
+      ...healthStatus,
+      backgroundProcessor: processorStats
     });
 
   } catch (error) {

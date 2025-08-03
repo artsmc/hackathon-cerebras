@@ -8,6 +8,7 @@ import {
   calculateLetterGrade 
 } from '../lib/schemas/policy-audit.schema';
 import { AuditError } from '../types/policy-audit.types';
+import { JobLoggerService } from './job-logger.service';
 
 const prisma = new PrismaClient();
 
@@ -29,6 +30,7 @@ export class PolicyAuditService {
    * @returns Audit report ID and confidence score
    */
   static async generateAuditReport(policyId: number): Promise<{ auditReportId: number; confidence: number }> {
+    const startTime = Date.now();
     try {
       // Fetch policy data
       const policy = await prisma.policy.findUnique({
@@ -45,12 +47,17 @@ export class PolicyAuditService {
       // Store audit report in database
       const auditReportId = await this.storeAuditReport(policyId, auditResult);
 
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'generateAuditReport', totalTime, true);
+
       return {
         auditReportId,
         confidence: auditResult.confidence
       };
 
     } catch (error) {
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'generateAuditReport', totalTime, false);
       console.error(`Failed to generate audit for policy ${policyId}:`, error);
       throw new AuditError(
         `Failed to generate policy audit: ${error instanceof Error ? error.message : 'Unknown error'}`,
@@ -66,6 +73,7 @@ export class PolicyAuditService {
    * @returns Structured audit result
    */
   private static async performAIAudit(policyText: string): Promise<PolicyAuditResult> {
+    const startTime = Date.now();
     try {
       const { object } = await generateObject({
         model: model,
@@ -95,9 +103,14 @@ ${policyText}`,
         object.letterGrade = calculatedGrade;
       }
 
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'performAIAudit', totalTime, true);
+
       return object;
 
     } catch (error) {
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'performAIAudit', totalTime, false);
       console.error('AI audit generation failed:', error);
       throw new Error(`AI audit generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -130,6 +143,7 @@ ${policyText}`,
    * @returns Created audit report ID
    */
   private static async storeAuditReport(policyId: number, auditResult: PolicyAuditResult): Promise<number> {
+    const startTime = Date.now();
     try {
       // Create audit report
       const auditReport = await prisma.auditReport.create({
@@ -141,6 +155,8 @@ ${policyText}`,
           raw_audit_json: JSON.stringify(auditResult),
         }
       });
+
+      JobLoggerService.logDatabaseOperation('create', 'AuditReport', auditReport.id);
 
       // Create section scores
       const sectionScores = [
@@ -220,9 +236,16 @@ ${policyText}`,
         data: sectionScores
       });
 
+      JobLoggerService.logDatabaseOperation('createMany', 'SectionScore', auditReport.id);
+
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'storeAuditReport', totalTime, true);
+
       return auditReport.id;
 
     } catch (error) {
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'storeAuditReport', totalTime, false);
       console.error('Failed to store audit report:', error);
       throw new Error(`Failed to store audit report: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -234,6 +257,7 @@ ${policyText}`,
    * @returns Complete audit report data
    */
   static async getAuditReport(auditReportId: number) {
+    const startTime = Date.now();
     try {
       const auditReport = await prisma.auditReport.findUnique({
         where: { id: auditReportId },
@@ -247,7 +271,7 @@ ${policyText}`,
         return null;
       }
 
-      return {
+      const result = {
         id: auditReport.id,
         policyId: auditReport.policy_id,
         totalScore: auditReport.total_score,
@@ -269,7 +293,14 @@ ${policyText}`,
         rawAuditData: auditReport.raw_audit_json ? JSON.parse(auditReport.raw_audit_json) : null,
       };
 
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'getAuditReport', totalTime, true);
+
+      return result;
+
     } catch (error) {
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'getAuditReport', totalTime, false);
       console.error(`Failed to get audit report ${auditReportId}:`, error);
       throw new Error(`Failed to retrieve audit report: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -281,6 +312,7 @@ ${policyText}`,
    * @returns True if valid
    */
   private static validateAuditResult(auditResult: PolicyAuditResult): boolean {
+    const startTime = Date.now();
     try {
       // Check score ranges
       const sections = auditResult.sections;
@@ -297,13 +329,20 @@ ${policyText}`,
         sections.jurisdictionEnforcement.score >= 0 && sections.jurisdictionEnforcement.score <= 5,
       ];
 
-      return validations.every(v => v) && 
+      const isValid = validations.every(v => v) && 
              auditResult.totalScore >= 0 && 
              auditResult.totalScore <= 100 &&
              auditResult.confidence >= 0 && 
              auditResult.confidence <= 1;
 
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'validateAuditResult', totalTime, isValid);
+
+      return isValid;
+
     } catch (error) {
+      const totalTime = Date.now() - startTime;
+      JobLoggerService.logAIServiceCall('PolicyAuditService', 'validateAuditResult', totalTime, false);
       console.error('Audit result validation failed:', error);
       return false;
     }

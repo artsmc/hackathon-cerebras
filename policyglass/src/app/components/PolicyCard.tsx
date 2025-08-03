@@ -24,7 +24,7 @@ export default function PolicyCard({ id, url, company, created_at, reportId }: P
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-2">
           <FileText className="text-blue-500" size={20} />
-          <h3 className="font-medium text-foreground truncate">{company}</h3>
+<h3 className="font-medium text-foreground">{company}</h3>
         </div>
       </div>
       

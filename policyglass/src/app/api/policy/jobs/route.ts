@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PolicyJobService } from '../../../services/policy-job.service';
 import { BackgroundProcessorService } from '../../../services/background-processor.service';
 import { UserQuotaService } from '../../../services/user-quota.service';
+import { JobLoggerService } from '../../../services/job-logger.service';
 import { CreateJobRequest, CreateJobResponse } from '../../../types/policy-audit.types';
 import { verifySession } from '../../../lib/session';
 import { z } from 'zod';
@@ -60,6 +61,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     // Create job with user ID
     const jobId = await PolicyJobService.createJob(url, session.userId);
+    
+    // Log job creation
+    JobLoggerService.logJobCreated(jobId, url, session.userId);
     
     // Queue job for processing
     BackgroundProcessorService.queueJob(jobId);
