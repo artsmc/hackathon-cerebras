@@ -9,6 +9,10 @@ This file stores Context7-compatible library IDs for quick reference and reuse.
 - /jose/jose - JWT handling library
 - /zod/zod - TypeScript-first schema validation library
 
+## AI & Machine Learning Libraries
+- /openai/openai - OpenAI API library
+- /ai-sdk/ai-sdk - AI SDK for Next.js applications
+
 ## UI & Frontend Libraries
 - /tailwindcss/tailwindcss - Tailwind CSS utility-first framework
 - /framer/motion - Framer Motion animation library

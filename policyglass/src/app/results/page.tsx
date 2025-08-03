@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Flag, AlertTriangle, FileText } from "lucide-react";
+import { useSearchParams } from 'next/navigation';
 import Header from "../components/Header";
 
 const bounceInAnimation = `
@@ -25,19 +26,70 @@ const bounceInAnimation = `
 
 export default function Results() {
   const [showReport, setShowReport] = useState(false);
-  
-  // Placeholder data for flags and warnings
-  const flags = [
+  const [policyData, setPolicyData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const policyId = searchParams.get('policyId');
+
+  useEffect(() => {
+    if (policyId) {
+      fetchPolicyData(parseInt(policyId));
+    } else {
+      setLoading(false);
+    }
+  }, [policyId]);
+
+  const fetchPolicyData = async (id: number) => {
+    try {
+      setLoading(true);
+      // TODO: Implement actual policy data fetching from API
+      // For now, we'll simulate the data structure
+      const response = await fetch(`/api/policy/${id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setPolicyData(data);
+      } else {
+        setError('Failed to fetch policy data');
+      }
+    } catch (err) {
+      setError('Error fetching policy data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Placeholder data for flags and warnings (will be replaced with actual data)
+  const flags = policyData?.flags || [
     "Potential bias detected in policy language",
     "Contradictory statements found in sections 3.2 and 5.1",
     "Missing stakeholder consultation process"
   ];
   
-  const warnings = [
+  const warnings = policyData?.warnings || [
     "Policy may have unintended consequences for small businesses",
     "Implementation timeline appears unrealistic",
     "Compliance requirements not clearly defined"
   ];
+
+  const companyInfo = policyData?.company_name || "Company Policy Analysis";
+
+  if (loading) {
+    return (
+      <div className="font-sans min-h-screen py-4 pb-20">
+        <Header />
+        <main className="flex flex-col items-center justify-center h-80vh">
+          <div className="text-center">
+            <div className="inline-block p-3 rounded-full bg-gray-100 mb-4">
+              <FileText className="text-foreground" size={32} />
+            </div>
+            <h2 className="text-xl font-semibold text-foreground">Analyzing Policy Document</h2>
+            <p className="text-foreground mt-2">Processing your request and generating insights...</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="font-sans min-h-screen py-4 pb-20">
@@ -53,7 +105,7 @@ export default function Results() {
                 <div className="inline-block p-3 rounded-full bg-gray-100 mb-4">
                   <FileText className="text-foreground" size={32} />
                 </div>
-                <h2 className="text-xl font-semibold text-foreground">Analyzing Policy Document</h2>
+                <h2 className="text-xl font-semibold text-foreground">{companyInfo}</h2>
                 <p className="text-foreground mt-2">Processing your request and generating insights...</p>
               </div>
               
@@ -61,7 +113,7 @@ export default function Results() {
               <div className="w-full mb-6">
                 <h3 className="text-lg font-medium text-foreground mb-3">Flags Identified</h3>
                 <div className="space-y-3">
-                  {flags.map((flag, index) => (
+                  {flags.map((flag: string, index: number) => (
                     <div key={index} className="flex items-start p-3 bg-red-100 rounded-md">
                       <Flag className="text-red-800 mr-2 mt-0.5 flex-shrink-0" size={16} />
                       <span className="text-red-800">{flag}</span>
@@ -74,7 +126,7 @@ export default function Results() {
               <div className="w-full mb-6">
                 <h3 className="text-lg font-medium text-foreground mb-3">Warnings</h3>
                 <div className="space-y-3">
-                  {warnings.map((warning, index) => (
+                  {warnings.map((warning: string, index: number) => (
                     <div key={index} className="flex items-start p-3 bg-yellow-100 rounded-md">
                       <AlertTriangle className="text-yellow-800 mr-2 mt-0.5 flex-shrink-0" size={16} />
                       <span className="text-yellow-800">{warning}</span>

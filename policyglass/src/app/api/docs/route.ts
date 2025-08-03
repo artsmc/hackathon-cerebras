@@ -275,6 +275,89 @@ export async function GET() {
           },
         },
       },
+      '/policy/research': {
+        post: {
+          operationId: 'researchPolicy',
+          summary: 'Research policy terms',
+          description: 'Research and store policy terms for a given website URL using AI analysis',
+          tags: ['Policy Research'],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    url: {
+                      type: 'string',
+                      format: 'uri',
+                      description: 'Website URL to research policy terms for',
+                    },
+                  },
+                  required: ['url'],
+                },
+              },
+            },
+          },
+          responses: {
+            '200': {
+              description: 'Policy research completed and stored successfully',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      policyId: {
+                        type: 'number',
+                        description: 'ID of the stored policy research',
+                      },
+                      message: {
+                        type: 'string',
+                        description: 'Success message',
+                      },
+                    },
+                    required: ['policyId', 'message'],
+                  },
+                },
+              },
+            },
+            '400': {
+              description: 'Invalid input data or URL format',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      error: {
+                        type: 'string',
+                        description: 'Error message',
+                      },
+                    },
+                    required: ['error'],
+                  },
+                },
+              },
+            },
+            '500': {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      error: {
+                        type: 'string',
+                        description: 'Error message',
+                      },
+                    },
+                    required: ['error'],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     components: {
       schemas: {

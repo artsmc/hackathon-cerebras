@@ -8,6 +8,18 @@ export const UserSchema = z.object({
   role: z.string().describe('Role of the user (user, admin)'),
 });
 
+// Policy research request schema
+export const PolicyResearchRequestSchema = z.object({
+  url: z.string().url().describe('Website URL to research policy terms for'),
+});
+
+// Policy research response schema
+export const PolicyResearchResponseSchema = z.object({
+  policyId: z.number().describe('ID of the stored policy research'),
+  message: z.string().describe('Success message'),
+  error: z.string().optional().describe('Error message'),
+});
+
 // Login request schema
 export const LoginRequestSchema = z.object({
   username: z.string().describe('Username or email for login'),

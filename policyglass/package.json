@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^2.0.0",
     "@omer-x/next-openapi-json-generator": "^2.0.2",
     "@omer-x/next-openapi-route-handler": "^2.0.0",
     "@types/swagger-ui-react": "^5.18.0",
+    "ai": "^5.0.0",
     "bcryptjs": "^3.0.2",
     "framer-motion": "^12.23.12",
     "jose": "^6.0.12",
