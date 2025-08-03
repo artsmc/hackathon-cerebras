@@ -19,7 +19,7 @@ interface DatabaseSession {
   id: string;
   user_id: number;
   ip_address: string;
-  user_agent: string;
+  user_agent: string | null;
 }
 
 export class AuthService {

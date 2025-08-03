@@ -8,7 +8,7 @@ export class AuditService {
     event_type: string;
     description: string;
     source_ip: string;
-    user_agent: string;
+    user_agent: string | null;
   }) {
     return await prisma.auditLog.create({
       data: {
@@ -21,7 +21,7 @@ export class AuditService {
     });
   }
 
-  static async logPasswordResetRequest(userId: number, sourceIp: string, userAgent: string) {
+  static async logPasswordResetRequest(userId: number, sourceIp: string, userAgent: string | null) {
     return await this.createAuditLog({
       user_id: userId,
       event_type: 'password_reset_request',
@@ -31,7 +31,7 @@ export class AuditService {
     });
   }
 
-  static async logPasswordResetCompleted(userId: number, sourceIp: string, userAgent: string) {
+  static async logPasswordResetCompleted(userId: number, sourceIp: string, userAgent: string | null) {
     return await this.createAuditLog({
       user_id: userId,
       event_type: 'password_reset',
@@ -51,7 +51,7 @@ export class AuditService {
     });
   }
 
-  static async logLogout(userId: number, sourceIp: string, userAgent: string) {
+  static async logLogout(userId: number, sourceIp: string, userAgent: string | null) {
     return await this.createAuditLog({
       user_id: userId,
       event_type: 'logout',

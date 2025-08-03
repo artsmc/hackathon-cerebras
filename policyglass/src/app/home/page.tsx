@@ -155,7 +155,7 @@ export default function Home() {
                       
                       <h3 className="font-bold text-white text-lg p-2  bg-lime-800 text-center">Why use PolicyGlass?</h3>
                       <p className="text-[#323232] p-6">
-                        More often than ever, companies are burying liability releases and hiding data collection practices within dense legal jargon. 
+                        More often than ever, companies are burying liability releases and hiding data collection practices within dense legal jargon.
                         PolicyGlass is built to aid your digital safety and protect your privacy.
                       </p>
 
@@ -186,10 +186,10 @@ export default function Home() {
                   <div>
                     <h2 className="text-xl font-semibold mb-2 text-white">Coming Soon</h2>
                     <p className="text-white text-sm">
-                      We're working on releasing a browser extension that will automate the policy review process. 
-                      With this extension, you'll be able to instantly analyze terms of service and privacy policies 
+                      We&#39;re working on releasing a browser extension that will automate the policy review process. 
+                      With this extension, you&#39;ll be able to instantly analyze terms of service and privacy policies 
                       while browsing the web. The extension will highlight potential concerns and provide a quick 
-                      summary of the policy's implications for your privacy and rights.
+                      summary of the policy&#39;s implications for your privacy and rights.
                     </p>
                   </div>
                 </div>

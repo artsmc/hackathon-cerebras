@@ -10,10 +10,11 @@ import { AuditReportService } from '../../../../services/audit-report.service';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const reportId = parseInt(params.id, 10);
+    const { id } = await params;
+    const reportId = parseInt(id, 10);
     
     if (isNaN(reportId)) {
       return Response.json(
