@@ -25,7 +25,7 @@ export const { POST } = defineRoute({
     return new Response(JSON.stringify(result), { status: 200 });
   },
   responses: {
-    200: { description: 'Logout successful', content: LogoutResponseSchema },
+    200: { description: 'Logout successful' },
     500: { description: 'Internal server error' },
   },
 });

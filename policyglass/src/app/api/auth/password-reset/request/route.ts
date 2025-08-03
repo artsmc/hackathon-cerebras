@@ -28,7 +28,7 @@ export const { POST } = defineRoute({
     return new Response(JSON.stringify(result), { status: 200 });
   },
   responses: {
-    200: { description: 'Password reset request processed', content: PasswordResetResponseSchema },
+    200: { description: 'Password reset request processed' },
     400: { description: 'Invalid input data' },
     500: { description: 'Internal server error' },
   },

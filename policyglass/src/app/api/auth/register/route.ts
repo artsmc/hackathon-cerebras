@@ -28,8 +28,8 @@ export const { POST } = defineRoute({
     return new Response(JSON.stringify(result), { status: 201 });
   },
   responses: {
-    201: { description: 'User registered successfully', content: RegisterResponseSchema },
-    400: { description: 'Invalid input data or user already exists' },
+    200: { description: 'Registration successful' },
+    400: { description: 'Invalid input data' },
     500: { description: 'Internal server error' },
   },
   handleErrors: (errorType, issues) => {

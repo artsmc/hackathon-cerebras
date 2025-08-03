@@ -29,9 +29,9 @@ export const { POST } = defineRoute({
     return new Response(JSON.stringify(result), { status: 200 });
   },
   responses: {
-    200: { description: 'Login successful', content: LoginResponseSchema },
-    400: { description: 'Invalid input data' },
-    401: { description: 'Unauthorized - Invalid credentials or account locked' },
+    200: { description: 'Login successful' },
+    400: { description: 'Invalid credentials' },
+    401: { description: 'Unauthorized - Email not verified' },
     500: { description: 'Internal server error' },
   },
   handleErrors: (errorType, issues) => {

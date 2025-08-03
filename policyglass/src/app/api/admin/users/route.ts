@@ -39,7 +39,7 @@ export const { GET } = defineRoute({
     return new Response(JSON.stringify(result), { status: 200 });
   },
   responses: {
-    200: { description: 'Users retrieved successfully', content: GetAllUsersResponseSchema },
+    200: { description: 'Users retrieved successfully' },
     403: { description: 'Forbidden - Admin access required' },
     500: { description: 'Internal server error' },
   },
@@ -81,7 +81,7 @@ export const { PUT } = defineRoute({
     return new Response(JSON.stringify(result), { status: 200 });
   },
   responses: {
-    200: { description: 'User role updated successfully', content: UpdateUserRoleResponseSchema },
+    200: { description: 'User role updated successfully' },
     400: { description: 'Invalid input data or cannot remove own admin role' },
     403: { description: 'Forbidden - Admin access required' },
     500: { description: 'Internal server error' },

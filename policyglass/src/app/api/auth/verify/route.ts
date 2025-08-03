@@ -27,8 +27,8 @@ export const { POST } = defineRoute({
     }), { status: 200 });
   },
   responses: {
-    200: { description: 'Session verified', content: VerifyResponseSchema },
-    401: { description: 'Unauthorized - No valid session' },
+    200: { description: 'Email verification successful' },
+    400: { description: 'Invalid verification token' },
     500: { description: 'Internal server error' },
   },
 });
