@@ -30,6 +30,7 @@ model User {
   reset_requests         PasswordResetRequest[]
   audit_logs             AuditLog[]
   saved_reports          UserSavedReport[]
+  policy_jobs            PolicyJob[]
 }
 
 model PasswordHistory {
@@ -146,6 +147,8 @@ model PolicyJob {
   // Job identification
   job_type             String   @default("POLICY_ANALYSIS")
   source_url           String
+  user_id              Int
+  user                 User     @relation(fields: [user_id], references: [id])
   
   // Overall job status
   status               String   @default("PENDING") // "PENDING", "PROCESSING", "COMPLETED", "FAILED"
@@ -178,4 +181,6 @@ model PolicyJob {
   @@index([created_at])
   @@index([expires_at])
   @@index([source_url])
+  @@index([user_id])
+  @@index([user_id, created_at])
 }

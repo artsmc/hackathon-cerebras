@@ -17,9 +17,10 @@ export class PolicyJobService {
   /**
    * Creates a new policy analysis job
    * @param sourceUrl - The URL to analyze
+   * @param userId - The user creating the job
    * @returns Job ID for tracking
    */
-  static async createJob(sourceUrl: string): Promise<string> {
+  static async createJob(sourceUrl: string, userId: number): Promise<string> {
     try {
       const expiresAt = new Date();
       expiresAt.setHours(expiresAt.getHours() + 24); // 24-hour expiration
@@ -27,6 +28,7 @@ export class PolicyJobService {
       const job = await prisma.policyJob.create({
         data: {
           source_url: sourceUrl,
+          user_id: userId,
           expires_at: expiresAt,
         }
       });
