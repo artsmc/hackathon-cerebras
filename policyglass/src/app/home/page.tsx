@@ -1,47 +1,11 @@
+"use client";
+
 import Header from "../components/Header";
 import AuthCheck from "../components/AuthCheck";
 import AnimatedHero from "../components/AnimatedHero";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [inputValue, setInputValue] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      // Call policy research API
-      const response = await fetch('/api/policy/research', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url: inputValue }),
-      });
-
-      const data = await response.json();
-      
-      if (response.ok && data.policyId) {
-        // Navigate to results page with policy ID
-        router.push(`/results?policyId=${data.policyId}`);
-      } else {
-        console.error('Policy research failed:', data.error);
-        // Still navigate to results page but without policy ID (will show error)
-        router.push('/results');
-      }
-    } catch (error) {
-      console.error('API call error:', error);
-      // Navigate to results page even on error
-      router.push('/results');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   // State to track which animation should be displayed
   const [currentAnimation, setCurrentAnimation] = useState(0);
 

@@ -25,9 +25,15 @@ const bounceInAnimation = `
   }
 `;
 
+interface PolicyData {
+  flags?: string[];
+  warnings?: string[];
+  company_name?: string;
+}
+
 export default function Results() {
   const [showReport, setShowReport] = useState(false);
-  const [policyData, setPolicyData] = useState<any>(null);
+  const [policyData, setPolicyData] = useState<PolicyData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
@@ -168,7 +174,7 @@ export default function Results() {
                 <p>Full report content would be displayed here when connected to the API.</p>
                 
                 <h4>Additional Insights</h4>
-                <p>When the "View Full Report" button is clicked, this section expands to take up the majority of the screen, similar to the layout in V0 dev or Claude artifacts. The flags section on the left shrinks to accommodate this larger report view.</p>
+                <p>When the &ldquo;View Full Report&rdquo; button is clicked, this section expands to take up the majority of the screen, similar to the layout in V0 dev or Claude artifacts. The flags section on the left shrinks to accommodate this larger report view.</p>
                 
                 <h4>Technical Implementation</h4>
                 <p>This responsive layout uses Tailwind CSS classes to adjust the width of each section based on the state of the toggle button. On smaller screens, the sections stack vertically, while on larger screens they display side-by-side.</p>

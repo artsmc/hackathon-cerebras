@@ -2,9 +2,6 @@ import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { PrismaClient } from '../../generated/prisma'
-
-const prisma = new PrismaClient()
 
 // Session payload interface
 export interface SessionPayload {

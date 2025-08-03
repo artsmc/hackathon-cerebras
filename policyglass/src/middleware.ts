@@ -3,13 +3,10 @@ import { decrypt } from './app/lib/session'
 
 // Protected routes that require authentication
 const protectedRoutes = ['/dashboard', '/admin']
-// Public routes that should not be protected
-const publicRoutes = ['/home', '/login', '/register', '/password-reset', '/']
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
   const isProtectedRoute = protectedRoutes.some(route => path.startsWith(route))
-  const isPublicRoute = publicRoutes.some(route => path.startsWith(route))
 
   // Skip middleware for API routes and static files
   if (path.startsWith('/api/') || path.includes('.')) {

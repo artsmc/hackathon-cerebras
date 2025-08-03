@@ -1,0 +1,115 @@
+{
+  "id": "policyglass-dev-env",
+  "name": "PolicyGlass Development Environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "webUrl",
+      "value": "http://localhost:3000",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "userId",
+      "value": "1",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "adminUserId",
+      "value": "1",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testUserId",
+      "value": "2",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "policyId",
+      "value": "1",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "auditReportId",
+      "value": "1",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testUsername",
+      "value": "testuser",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testEmail",
+      "value": "testuser@example.com",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "testPassword",
+      "value": "password123",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "adminUsername",
+      "value": "admin",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "adminEmail",
+      "value": "admin@example.com",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "adminPassword",
+      "value": "admin123",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "testPolicyUrl",
+      "value": "https://example.com/privacy-policy",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "resetToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "sessionId",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

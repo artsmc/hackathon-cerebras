@@ -7,6 +7,15 @@
 - **Warnings**: Potential concerns or areas that need careful review in policy documents (displayed in yellow)
 - **Audit Report**: Comprehensive analysis results for a policy document including scores and commentary
 - **Section Score**: Individual scoring and commentary for specific sections within a policy audit report
+- **Policy Job**: Background processing task that manages the complete policy analysis workflow through research and audit phases
+- **Research Phase**: First phase of policy analysis that extracts and stores policy document content from URLs
+- **Audit Phase**: Second phase that generates comprehensive audit reports with scoring and analysis
+- **Job Status**: Current state of a policy job (PENDING, PROCESSING, COMPLETED, FAILED)
+- **Background Processor**: Service that orchestrates the complete policy analysis workflow with queue management
+- **WebSocket Connection**: Real-time communication channel for job progress updates and notifications
+- **Job Queue**: Processing queue that manages pending policy analysis jobs with concurrent processing limits
+- **Confidence Score**: AI-generated confidence level (0.0-1.0) indicating reliability of analysis results
+- **Job Expiration**: Automatic cleanup mechanism for jobs older than 24 hours to maintain system performance
 
 ## Technical Terms
 - **Next.js App Router**: Modern routing architecture in Next.js that uses file-based routing and server components

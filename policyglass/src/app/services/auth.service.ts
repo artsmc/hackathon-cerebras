@@ -1,8 +1,7 @@
 import { PrismaClient } from '../../generated/prisma';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
-import { SessionPayload } from '../lib/session';
-import { createSession, getSession } from '../lib/session';
+import { createSession } from '../lib/session';
 import { PasswordService } from './password.service';
 import { AuditService } from './audit.service';
 
@@ -14,6 +13,13 @@ export interface AuthUser {
   username: string;
   email: string;
   role: string;
+}
+
+interface DatabaseSession {
+  id: string;
+  user_id: number;
+  ip_address: string;
+  user_agent: string;
 }
 
 export class AuthService {
@@ -135,7 +141,7 @@ export class AuthService {
     });
   }
 
-  static async logSuccessfulLogin(userId: number, session: any) {
+  static async logSuccessfulLogin(userId: number, session: DatabaseSession) {
     await AuditService.createAuditLog({
       user_id: userId,
       event_type: 'successful_login',

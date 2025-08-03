@@ -17,7 +17,9 @@ export class PolicyResearchService {
         model: model,
         prompt: `Extract the company name from this website: ${url}. Return only the company name, nothing else.`,
         tools: {
-          web_search_preview: openai.tools.webSearchPreview(),
+          web_search_preview: openai.tools.webSearchPreview({
+            searchContextSize: 'medium'
+          }),
         },
       });
 
@@ -34,7 +36,9 @@ export class PolicyResearchService {
         model: model,
         prompt: `Research the terms of service and privacy policy for ${companyName} at ${url}. Provide a comprehensive analysis of at least 1500 words covering key clauses, user rights, restrictions, and important policy details. Translate to English if needed.`,
         tools: {
-          web_search_preview: openai.tools.webSearchPreview(),
+          web_search_preview: openai.tools.webSearchPreview({
+            searchContextSize: 'medium'
+          }),
         },
       });
 

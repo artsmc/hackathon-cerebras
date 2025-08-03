@@ -4,9 +4,10 @@ import { PrismaClient } from '../../../../generated/prisma';
 
 const prisma = new PrismaClient();
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const policyId = parseInt(params.id);
+    const resolvedParams = await params;
+    const policyId = parseInt(resolvedParams.id);
     
     if (isNaN(policyId)) {
       return NextResponse.json({ error: 'Invalid policy ID' }, { status: 400 });

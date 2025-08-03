@@ -1,11 +1,6 @@
-import { redirect } from 'next/navigation'
-import { getSession } from '../lib/session'
 import LoginForm from '../components/LoginForm'
 
 export default async function LoginPage() {
-  const session = await getSession()
-  
-  
 
   return (
     <div 
@@ -28,7 +23,7 @@ export default async function LoginPage() {
           
           <div className="mt-4 text-center">
             <p className="text-background">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <a href="/register" className="text-lime-300 hover:underline">
                 Register here
               </a>

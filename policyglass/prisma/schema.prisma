@@ -99,6 +99,7 @@ model Policy {
   raw_response String?
   created_at  DateTime @default(now())
   audit_reports AuditReport[]
+  policy_jobs PolicyJob[]
 }
 
 model AuditReport {
@@ -112,6 +113,7 @@ model AuditReport {
   created_at      DateTime @default(now())
   section_scores  SectionScore[]
   saved_reports   UserSavedReport[]
+  policy_jobs     PolicyJob[]
 }
 
 model SectionScore {
@@ -136,4 +138,44 @@ model UserSavedReport {
 
   @@index([user_id])
   @@index([report_id])
+}
+
+model PolicyJob {
+  id                    String   @id @default(cuid())
+  
+  // Job identification
+  job_type             String   @default("POLICY_ANALYSIS")
+  source_url           String
+  
+  // Overall job status
+  status               String   @default("PENDING") // "PENDING", "PROCESSING", "COMPLETED", "FAILED"
+  progress_percentage  Int      @default(0)
+  
+  // Research phase (Phase 1)
+  research_status      String   @default("PENDING") // "PENDING", "PROCESSING", "COMPLETED", "FAILED"
+  research_started_at  DateTime?
+  research_completed_at DateTime?
+  research_error       String?
+  research_confidence  Float?   // 0.0-1.0
+  policy_id           Int?
+  policy              Policy?  @relation(fields: [policy_id], references: [id])
+  
+  // Audit phase (Phase 2)
+  audit_status         String   @default("PENDING") // "PENDING", "PROCESSING", "COMPLETED", "FAILED"
+  audit_started_at     DateTime?
+  audit_completed_at   DateTime?
+  audit_error          String?
+  audit_confidence     Float?   // 0.0-1.0
+  audit_report_id     Int?
+  audit_report        AuditReport? @relation(fields: [audit_report_id], references: [id])
+  
+  // Metadata
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  expires_at          DateTime // 24hr cleanup
+  
+  @@index([status])
+  @@index([created_at])
+  @@index([expires_at])
+  @@index([source_url])
 }

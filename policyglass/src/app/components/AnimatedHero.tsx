@@ -96,7 +96,7 @@ export default function AnimatedHero() {
               ))}
             </div>
             <p className="text-foreground italic">
-              "PolicyGlass protected me from agreeing to Disney's predatory release of liability within Disney+. Now, if I get injured, I have the grounds to sue!""
+              &ldquo;PolicyGlass protected me from agreeing to Disney&apos;s predatory release of liability within Disney+. Now, if I get injured, I have the grounds to sue!&rdquo;
             </p>
             <p className="text-foreground font-semibold mt-4">- Alexandra Rosay, Associate Analyst</p>
           </motion.div>

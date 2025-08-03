@@ -4,10 +4,14 @@
 - **Frontend**: Next.js 15.4.5, TypeScript 5+, React 19.1.0
 - **Backend**: Next.js App Router API routes, Node.js
 - **Database**: SQLite, Prisma ORM 6.13.0+
+- **AI Integration**: OpenAI SDK (@ai-sdk/openai), Vercel AI SDK (ai)
+- **Real-time Communication**: WebSocket (ws) for job progress updates
 - **State Management**: React useState and client-side state
 - **UI Components**: Lucide React icons, Framer Motion for animations
 - **Authentication**: JWT (jose library), bcryptjs for password hashing
 - **API Documentation**: OpenAPI/Swagger integration with @omer-x/next-openapi-route-handler
+- **Background Processing**: Custom job queue system with concurrent processing
+- **Validation**: Zod for runtime type checking and schema validation
 
 ## Development Tools
 - **Testing**: Jest, React Testing Library (planned)
@@ -20,9 +24,12 @@
 ```json
 {
   "dependencies": {
+    "@ai-sdk/openai": "^2.0.0",
     "@omer-x/next-openapi-json-generator": "^2.0.2",
     "@omer-x/next-openapi-route-handler": "^2.0.0",
     "@types/swagger-ui-react": "^5.18.0",
+    "@types/ws": "^8.18.1",
+    "ai": "^5.0.0",
     "bcryptjs": "^3.0.2",
     "framer-motion": "^12.23.12",
     "jose": "^6.0.12",
@@ -33,6 +40,7 @@
     "react-dom": "19.1.0",
     "swagger-ui-react": "^5.27.1",
     "uuid": "^11.1.0",
+    "ws": "^8.18.3",
     "zod": "^4.0.14"
   },
   "devDependencies": {
