@@ -2,20 +2,23 @@
 
 ## Domain-Specific Terms
 - **PolicyGlass**: AI-powered policy document analysis platform that transforms complex regulatory text into actionable insights
-- **Policy Analysis**: Process of examining policy documents to identify potential issues, contradictions, and compliance concerns
-- **Flags**: Critical issues identified in policy documents that require immediate attention (displayed in red)
-- **Warnings**: Potential concerns or areas that need careful review in policy documents (displayed in yellow)
-- **Audit Report**: Comprehensive analysis results for a policy document including scores and commentary
-- **Section Score**: Individual scoring and commentary for specific sections within a policy audit report
-- **Policy Job**: Background processing task that manages the complete policy analysis workflow through research and audit phases
-- **Research Phase**: First phase of policy analysis that extracts and stores policy document content from URLs
-- **Audit Phase**: Second phase that generates comprehensive audit reports with scoring and analysis
-- **Job Status**: Current state of a policy job (PENDING, PROCESSING, COMPLETED, FAILED)
-- **Background Processor**: Service that orchestrates the complete policy analysis workflow with queue management
-- **WebSocket Connection**: Real-time communication channel for job progress updates and notifications
-- **Job Queue**: Processing queue that manages pending policy analysis jobs with concurrent processing limits
-- **Confidence Score**: AI-generated confidence level (0.0-1.0) indicating reliability of analysis results
+- **Policy Analysis**: Process of examining policy documents to identify potential issues, contradictions, and compliance concerns using AI-powered research and audit
+- **Flags**: Critical issues identified in policy documents that require immediate attention (displayed in red) with detailed commentary
+- **Warnings**: Potential concerns or areas that need careful review in policy documents (displayed in yellow) with analysis notes
+- **Audit Report**: Comprehensive analysis results for a policy document including structured scoring (0-100), letter grades (A-E), and detailed commentary
+- **Section Score**: Individual scoring and commentary for specific sections within a policy audit report with max score tracking
+- **Policy Job**: Background processing task that manages the complete policy analysis workflow through research and audit phases with user quota tracking
+- **Research Phase**: First phase of policy analysis that extracts and stores policy document content from URLs using OpenAI research
+- **Audit Phase**: Second phase that generates comprehensive audit reports with structured scoring and analysis using OpenAI generateObject
+- **Job Status**: Current state of a policy job (PENDING, PROCESSING, COMPLETED, FAILED) with phase-specific tracking
+- **Background Processor**: Service that orchestrates the complete policy analysis workflow with queue management and concurrent processing (max 3 jobs)
+- **WebSocket Connection**: Real-time communication channel for job progress updates and notifications with polling fallback
+- **Job Queue**: Processing queue that manages pending policy analysis jobs with FIFO processing and concurrent processing limits
+- **Confidence Score**: AI-generated confidence level (0.0-1.0) indicating reliability of analysis results with validation
 - **Job Expiration**: Automatic cleanup mechanism for jobs older than 24 hours to maintain system performance
+- **User Quota**: Daily job limit per user (default 3 jobs per 24 hours) with real-time tracking and validation
+- **Job Progress Percentage**: Real-time progress indicator showing completion status during job processing phases
+- **Phase Update Message**: Structured WebSocket message providing real-time updates for research and audit phase transitions
 
 ## Technical Terms
 - **Next.js App Router**: Modern routing architecture in Next.js that uses file-based routing and server components

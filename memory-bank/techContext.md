@@ -160,8 +160,9 @@
 ### Database Architecture
 - **Primary Database**: SQLite with Prisma ORM for local development
 - **Production Path**: Easy migration to PostgreSQL for production deployment
-- **Session Management**: JWT tokens stored in cookies with database session tracking
-- **Job Persistence**: PolicyJob table with comprehensive status tracking
+- **Session Management**: JWT tokens stored in secure cookies with database session tracking
+- **Job Persistence**: PolicyJob table with comprehensive two-phase job tracking
+- **User Quota Management**: Daily job limits with quota tracking and validation
 - **Performance**: Optimized indexes for job queries and user operations
 
 ### Security Implementation
