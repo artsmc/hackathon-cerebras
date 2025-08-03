@@ -49,8 +49,8 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
   };
 
   return (
-    <div className="login-form">
-      <h2>Login</h2>
+    <div className="login-form opacity-80 transition-all duration-225 hover:opacity-90">
+
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Username or Email:</label>
@@ -73,7 +73,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
           />
         </div>
         {error && <div className="error">{error}</div>}
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className='bg-white'>
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>

@@ -72,7 +72,7 @@ body {
 .password-reset-request-form button,
 .password-reset-confirm-form button {
   padding: 0.75rem 1rem;
-  background-color: #0070f3;
+  background-color: #3f6212; /* Lime 700 */
   color: white;
   border: none;
   border-radius: 4px;
@@ -85,14 +85,14 @@ body {
 .register-form button:hover,
 .password-reset-request-form button:hover,
 .password-reset-confirm-form button:hover {
-  background-color: #0051cc;
+  background-color: #365314; /* Lime 800 for hover state */
 }
 
 .login-form button:disabled,
 .register-form button:disabled,
 .password-reset-request-form button:disabled,
 .password-reset-confirm-form button:disabled {
-  background-color: #ccc;
+  background-color: #a3e635; /* Lime 400 for disabled state */
   cursor: not-allowed;
 }
 
