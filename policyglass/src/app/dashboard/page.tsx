@@ -1,6 +1,7 @@
 import { verifySession, isAdmin } from '../lib/session'
 import Header from '../components/Header'
 import Link from 'next/link'
+import PolicyListView from '../components/PolicyListView'
 
 export default async function DashboardPage() {
   const session = await verifySession()
@@ -22,23 +23,10 @@ export default async function DashboardPage() {
               You are logged in as a {session.role}.
             </p>
             
-            {/* User Dashboard Content */}
+            {/* Policy List View */}
             <div className="mb-8">
-              <h3 className="text-lg font-medium text-foreground mb-3">Your Policy Analysis</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="p-4 border border-gray-300 rounded-lg">
-                  <h4 className="font-medium text-foreground">Recent Documents</h4>
-                  <p className="text-foreground text-sm">View your recently analyzed policies</p>
-                </div>
-                <div className="p-4 border border-gray-300 rounded-lg">
-                  <h4 className="font-medium text-foreground">Saved Analyses</h4>
-                  <p className="text-foreground text-sm">Access your saved policy reviews</p>
-                </div>
-                <div className="p-4 border border-gray-300 rounded-lg">
-                  <h4 className="font-medium text-foreground">Analysis History</h4>
-                  <p className="text-foreground text-sm">See all your past policy analyses</p>
-                </div>
-              </div>
+              <h3 className="text-lg font-medium text-foreground mb-3">All Policy Documents</h3>
+              <PolicyListView userId={session.userId} />
             </div>
             
             {/* Admin Section (only visible to admins) */}

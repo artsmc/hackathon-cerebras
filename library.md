@@ -18,6 +18,7 @@ This file stores Context7-compatible library IDs for quick reference and reuse.
 - /framer/motion - Framer Motion animation library
 - /lucide/lucide - Lucide React icons library
 - /nextjs/next.js - Next.js React framework
+- /vercel/next.js - Next.js official Vercel repository (Context7 ID)
 - /reactjs/react - React JavaScript library
 
 ## Database Libraries

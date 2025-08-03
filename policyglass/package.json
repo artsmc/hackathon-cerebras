@@ -12,6 +12,8 @@
     "@ai-sdk/openai": "^2.0.0",
     "@omer-x/next-openapi-json-generator": "^2.0.2",
     "@omer-x/next-openapi-route-handler": "^2.0.0",
+    "@tanstack/react-query": "^5.84.1",
+    "@tanstack/react-query-devtools": "^5.84.1",
     "@types/react-toastify": "^4.1.0",
     "@types/swagger-ui-react": "^5.18.0",
     "@types/ws": "^8.18.1",
