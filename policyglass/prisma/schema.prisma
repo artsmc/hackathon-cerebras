@@ -29,6 +29,7 @@ model User {
   password_history       PasswordHistory[]
   reset_requests         PasswordResetRequest[]
   audit_logs             AuditLog[]
+  saved_reports          UserSavedReport[]
 }
 
 model PasswordHistory {
@@ -88,4 +89,51 @@ model BannedPassword {
   password   String
   source     String?
   created_at DateTime @default(now())
+}
+
+model Policy {
+  id          Int      @id @default(autoincrement())
+  company_name String
+  source_url  String
+  terms_text  String
+  raw_response String?
+  created_at  DateTime @default(now())
+  audit_reports AuditReport[]
+}
+
+model AuditReport {
+  id              Int      @id @default(autoincrement())
+  policy_id       Int
+  policy          Policy   @relation(fields: [policy_id], references: [id])
+  total_score     Int
+  letter_grade    String
+  overall_summary String
+  raw_audit_json  String?
+  created_at      DateTime @default(now())
+  section_scores  SectionScore[]
+  saved_reports   UserSavedReport[]
+}
+
+model SectionScore {
+  id          Int    @id @default(autoincrement())
+  report_id   Int
+  report      AuditReport @relation(fields: [report_id], references: [id])
+  section_name String
+  score       Int
+  max_score   Int
+  commentary  String
+}
+
+model UserSavedReport {
+  id           Int    @id @default(autoincrement())
+  user_id      Int
+  user         User   @relation(fields: [user_id], references: [id])
+  report_id    Int
+  report       AuditReport @relation(fields: [report_id], references: [id])
+  saved_at     DateTime @default(now())
+  display_name String?
+  notes        String?
+
+  @@index([user_id])
+  @@index([report_id])
 }

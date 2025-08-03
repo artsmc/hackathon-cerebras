@@ -5,6 +5,8 @@
 - **Policy Analysis**: Process of examining policy documents to identify potential issues, contradictions, and compliance concerns
 - **Flags**: Critical issues identified in policy documents that require immediate attention (displayed in red)
 - **Warnings**: Potential concerns or areas that need careful review in policy documents (displayed in yellow)
+- **Audit Report**: Comprehensive analysis results for a policy document including scores and commentary
+- **Section Score**: Individual scoring and commentary for specific sections within a policy audit report
 
 ## Technical Terms
 - **Next.js App Router**: Modern routing architecture in Next.js that uses file-based routing and server components
@@ -16,6 +18,8 @@
 - **JWT**: JSON Web Token - Standard for creating signed access tokens for session management
 - **Session Management**: Process of maintaining user authentication state across requests using cookies
 - **Password Reset Token**: Temporary token used to verify password reset requests with expiration
+- **User Saved Report**: User's saved policy audit reports with custom display names and notes
+- **Controller-Service Pattern**: Architecture pattern separating business logic (controllers) from data operations (services)
 
 ## Acronyms & Abbreviations
 - **PIV**: Personal Identity Verification - Authentication method for verifying user identity
@@ -23,3 +27,6 @@
 - **UK**: Unique Key - Database constraint for unique values
 - **PK**: Primary Key - Database constraint for primary key identification
 - **RBAC**: Role-Based Access Control - Security access pattern based on user roles
+- **API**: Application Programming Interface - Interface for system communication
+- **UI**: User Interface - Visual elements users interact with
+- **UX**: User Experience - Overall experience of a user interacting with the application

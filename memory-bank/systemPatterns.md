@@ -1,13 +1,13 @@
 # System Patterns
 
 ## Architecture Overview
-- **Frontend**: Next.js 15 App Router with TypeScript and Sass
+- **Frontend**: Next.js 15 App Router with TypeScript, Tailwind CSS, and Sass
   - Feature-based component organization in `src/app/`
   - React Server Components for initial data loading and auth checks
   - Client Components for interactive elements and state management
   - Responsive design with Tailwind CSS utility classes
 
-- **Backend**: Prisma ORM with SQLite database
+- **Backend**: Prisma ORM with SQLite database and Next.js API routes
   - Relational database schema with proper entity relationships
   - Type-safe database access through Prisma Client
   - Transaction support for complex operations
@@ -28,6 +28,17 @@
   - Server-side role validation
   - Conditional UI rendering based on roles
 
+- **Policy Analysis**: Document storage and reporting system
+  - Policy document storage with metadata
+  - Audit reporting with scores and commentary
+  - Section-by-section analysis results
+  - User dashboard saving functionality
+
+- **API Documentation**: OpenAPI/Swagger integration
+  - Zod schema validation for all API endpoints
+  - Automatic documentation generation
+  - Swagger UI for interactive API exploration
+
 - **Data Flow**
   1. User authentication via frontend forms
   2. API routes delegate to controllers for business logic
@@ -37,7 +48,9 @@
   6. Protected routes validate sessions and roles
   7. Policy document input via home page form
   8. Results displayed with flag/warning visualization
-  9. Admin users can manage system via admin dashboard
+  9. Users can save reports to their dashboard
+  10. Admin users can manage system via admin dashboard
+  11. API documentation available via Swagger UI
 
 ## Key Technical Decisions
 - **Next.js 15 App Router**: Better data fetching patterns and simplified routing over Pages Router
@@ -49,6 +62,7 @@
 - **UUID for Session IDs**: Secure random identifiers for sessions
 - **Comprehensive Security Features**: Password history, banned passwords, account locking
 - **Controller-Service Architecture**: Separation of concerns with thin API routes, business logic in controllers, and data operations in services
+- **Policy Analysis Storage**: Relational database approach for document analysis results
 
 ## Design Patterns
 - **Component Organization**: Feature-based structure in `src/app/` directory
@@ -61,6 +75,8 @@
 - **Data Validation**: Zod schemas for consistent validation across frontend and backend
 - **Role-Based Rendering**: Conditional UI display based on user permissions
 - **Responsive Layout**: Mobile-first design with flexbox and grid layouts
+- **Policy Document Storage**: Normalized database schema with proper relationships
+- **User Dashboard Tracking**: Many-to-many relationship between users and audit reports
 
 ## Critical Implementation Paths
 1. **Authentication Flow**
@@ -82,6 +98,7 @@
    - UI: Results page with flag visualization and report toggle
    - Design: Responsive layout with smooth animations
    - Data: Placeholder content awaiting AI analysis integration
+   - Storage: Policy documents and audit reports in database
 
 4. **Admin Dashboard**
    - Client: Protected admin pages with user management
@@ -90,6 +107,19 @@
    - Service: AdminService handling user management Prisma operations
    - Database: Audit logs and user data retrieval
    - Security: Role validation for all admin operations
+
+5. **User Dashboard**
+   - Client: Dashboard page showing saved policy reports
+   - Server: User saved reports retrieval and management
+   - Service: AuditService handling report saving operations
+   - Database: UserSavedReport table linking users to audit reports
+   - UI: Toggleable display of saved reports with custom labels
+
+6. **API Documentation**
+   - Schema: Zod validation schemas for all API endpoints
+   - Routes: OpenAPI route handlers with automatic documentation
+   - UI: Swagger interface for interactive API exploration
+   - Generation: Automatic JSON documentation output
 
 ## Component Relationships
 - `layout.tsx` provides global styling and font configuration
@@ -103,3 +133,5 @@
 - Middleware protects routes based on authentication status and roles
 - AuthCheck wrapper component provides client-side session validation
 - Dashboard pages conditionally render content based on user roles
+- Policy analysis components store and retrieve data through service layer
+- UserSavedReport model creates many-to-many relationship between users and audit reports

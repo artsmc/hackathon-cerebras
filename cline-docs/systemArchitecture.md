@@ -7,7 +7,7 @@ PolicyGlass is a Next.js web application that provides AI-powered policy documen
 - **Backend**: Server-side processing with Prisma ORM for database operations and API routes
 - **Database**: SQLite database (configured via DATABASE_URL environment variable)
 - **Authentication**: Comprehensive user authentication system with session management, RBAC, and security features
-- **Data Models**: User management, password security, configuration, session tracking, audit logging, and password reset functionality
+- **Data Models**: User management, password security, configuration, session tracking, audit logging, password reset functionality, and policy analysis storage
 
 The application follows a client-server architecture where policy documents are processed server-side for security and performance reasons. Users interact through a responsive web interface that provides real-time analysis results with visual flagging of potential issues.
 
@@ -20,6 +20,10 @@ erDiagram
     USER ||--o{ PASSWORD_HISTORY : "maintains"
     USER ||--o{ RESET_REQUEST : "requests"
     USER ||--o{ AUDIT_LOG : "generates"
+    USER ||--o{ USER_SAVED_REPORT : "saves"
+    POLICY ||--o{ AUDIT_REPORT : "has"
+    AUDIT_REPORT ||--o{ SECTION_SCORE : "contains"
+    AUDIT_REPORT ||--o{ USER_SAVED_REPORT : "saved by users"
     
     USER {
         int id PK
@@ -91,6 +95,43 @@ erDiagram
         string use_case
         boolean is_active
     }
+    
+    POLICY {
+        int id PK
+        string company_name
+        string source_url
+        string terms_text
+        string raw_response
+        datetime created_at
+    }
+    
+    AUDIT_REPORT {
+        int id PK
+        int policy_id FK
+        int total_score
+        string letter_grade
+        string overall_summary
+        string raw_audit_json
+        datetime created_at
+    }
+    
+    SECTION_SCORE {
+        int id PK
+        int report_id FK
+        string section_name
+        int score
+        int max_score
+        string commentary
+    }
+    
+    USER_SAVED_REPORT {
+        int id PK
+        int user_id FK
+        int report_id FK
+        datetime saved_at
+        string display_name
+        string notes
+    }
 ```
 
 ## Key Processes
@@ -105,21 +146,24 @@ flowchart TD
     G --> H[Visual Flag Display]
     H --> I[Full Report View Toggle]
     I --> J[Results Dashboard]
+    J --> K[User Dashboard Features]
+    K --> L[Admin Dashboard Features]
 ```
 
 ## File Structure
 - **policyglass/src/app/**: Next.js App Router pages and layout components
-  - **home/**: Main landing page with navigation
+  - **home/**: Main landing page with policy analysis input
   - **login/**: User login interface
   - **register/**: User registration interface
-  - **dashboard/**: Authenticated user dashboard
+  - **dashboard/**: Authenticated user dashboard with role-based content
   - **admin/**: Administrative dashboard and user management
-  - **results/**: Analysis results display with flags and warnings
+  - **results/**: Analysis results display with flags, warnings, and toggleable full report view
   - **layout.tsx**: Root layout with font configuration and global styles
   - **page.tsx**: Default landing page
 - **policyglass/src/app/api/**: API routes for authentication and admin functionality
   - **auth/**: Authentication-related API endpoints (login, logout, register, password reset, verify)
   - **admin/**: Admin-only API endpoints (user management)
+  - **docs/**: API documentation endpoints
 - **policyglass/src/app/controllers/**: Controller layer for handling business logic
   - **auth.controller.ts**: Authentication-related business logic
   - **admin.controller.ts**: Admin-related business logic
@@ -131,6 +175,8 @@ flowchart TD
   - **audit.service.ts**: Audit logging operations
 - **policyglass/src/app/components/**: Reusable React components for authentication and UI
 - **policyglass/src/app/lib/**: Utility functions for session management and authentication
+- **policyglass/src/generated/**: Generated Prisma client code
 - **policyglass/prisma/**: Database schema and Prisma configuration
-  - **schema.prisma**: Data models for users, sessions, audit logs, etc.
+  - **schema.prisma**: Data models for users, sessions, audit logs, policy documents, and analysis results
 - **memory-bank/**: Project memory and context documentation
+- **cline-docs/**: System documentation and glossary

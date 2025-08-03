@@ -11,6 +11,7 @@
 - **UI Components**: Lucide React icons for visual elements
 - **Animations**: Framer Motion 12.23.12+ for smooth transitions
 - **Utilities**: uuid 11.1.0 for secure session ID generation
+- **API Documentation**: OpenAPI/Swagger with @omer-x/next-openapi-route-handler
 
 ## Development Setup
 - **Node.js**: v20+ (LTS)
@@ -42,6 +43,9 @@
 ```json
 {
   "dependencies": {
+    "@omer-x/next-openapi-json-generator": "^2.0.2",
+    "@omer-x/next-openapi-route-handler": "^2.0.0",
+    "@types/swagger-ui-react": "^5.18.0",
     "bcryptjs": "^3.0.2",
     "framer-motion": "^12.23.12",
     "jose": "^6.0.12",
@@ -50,6 +54,7 @@
     "next": "15.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "swagger-ui-react": "^5.27.1",
     "uuid": "^11.1.0",
     "zod": "^4.0.14"
   },
@@ -71,6 +76,7 @@
     "typescript": "^5"
   }
 }
+```
 
 ## Tool Usage Patterns
 - **ESLint**: 
@@ -102,6 +108,11 @@
   - `npm run start` for production server
   - Prisma client generation during build process
 
+- **API Documentation**:
+  - OpenAPI route handlers defined with Zod schemas
+  - Swagger UI available at `/api-docs`
+  - JSON documentation generated automatically
+
 ## Current Implementation Details
 - **Database**: SQLite with Prisma ORM, local development setup
 - **Session Management**: JWT tokens stored in cookies with database session tracking
@@ -112,3 +123,6 @@
 - **Routing**: Next.js App Router with middleware protection
 - **Error Handling**: Comprehensive try/catch blocks with proper HTTP responses
 - **Type Safety**: Strict TypeScript with explicit typing throughout
+- **Architecture Pattern**: Controller-service pattern with thin API routes
+- **Policy Analysis Storage**: Implemented Policy, AuditReport, SectionScore, and UserSavedReport models
+- **API Documentation**: Integrated OpenAPI/Swagger documentation system
