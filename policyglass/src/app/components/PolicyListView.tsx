@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search, FileText, Calendar, ExternalLink } from 'lucide-react';
+import { Search, FileText } from 'lucide-react';
 import PolicyCard from './PolicyCard';
 import { PolicyListItem } from '../types/policy-list.types';
 

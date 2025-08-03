@@ -1,6 +1,5 @@
 import { WebSocket } from 'ws';
 import { 
-  WebSocketMessage, 
   JobUpdateMessage, 
   PhaseUpdateMessage, 
   ErrorMessage, 

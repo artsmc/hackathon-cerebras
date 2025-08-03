@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Flag, AlertTriangle, FileText, Clock, CheckCircle, XCircle } from "lucide-react";
+import { Flag, AlertTriangle, Clock, CheckCircle, XCircle } from "lucide-react";
 import { useSearchParams } from 'next/navigation';
 import Header from "../components/Header";
 import Link from "next/link";

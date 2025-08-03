@@ -2,7 +2,7 @@
 
 import Header from "../components/Header";
 import AuthCheck from "../components/AuthCheck";
-import QuotaDashboard from "../components/QuotaDashboard";
+// import QuotaDashboard from "../components/QuotaDashboard";
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
 import Link from "next/link";
 import { useState } from "react";

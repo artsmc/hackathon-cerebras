@@ -1,5 +1,5 @@
 import { PrismaClient } from '../../generated/prisma';
-import { decrypt, getSession } from '../lib/session';
+import { decrypt } from '../lib/session';
 import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();

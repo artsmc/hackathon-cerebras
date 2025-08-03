@@ -13,7 +13,7 @@ const model = openai('gpt-4o-mini');
 
 export class PolicyResearchService {
   static async extractCompanyName(url: string): Promise<string> {
-    const startTime = Date.now();
+    // const startTime = Date.now();
     try {
       const { text } = await generateText({
         model: model,
@@ -35,7 +35,7 @@ export class PolicyResearchService {
   }
 
   static async researchPolicyTerms(companyName: string, url: string): Promise<{ terms_text: string, raw_response: string }> {
-    const startTime = Date.now();
+    // const startTime = Date.now();
     try {
       const { text } = await generateText({
         model: model,
@@ -58,7 +58,7 @@ export class PolicyResearchService {
   }
 
   static async storePolicyResearch(url: string, researchData: { company_name: string, terms_text: string, raw_response: string }): Promise<number> {
-    const startTime = Date.now();
+    // const startTime = Date.now();
     try {
       const policy = await prisma.policy.create({
         data: {

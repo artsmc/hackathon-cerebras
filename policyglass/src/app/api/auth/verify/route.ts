@@ -2,7 +2,6 @@ import { getSession } from '@/app/lib/session';
 import defineRoute from '@omer-x/next-openapi-route-handler';
 
 // Import schemas
-import { VerifyResponseSchema } from '@/app/lib/openapi/schemas';
 
 export const { POST } = defineRoute({
   operationId: 'verifyUser',

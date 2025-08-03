@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { verifySession } from '../../../../lib/session';
 import { UserQuotaService } from '../../../../services/user-quota.service';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Verify user session
     const session = await verifySession();
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     // Verify user session
     const session = await verifySession();

@@ -1,4 +1,4 @@
-import { PolicyAuditResult, JobStatusType } from '../lib/schemas/policy-audit.schema';
+import { JobStatusType } from '../lib/schemas/policy-audit.schema';
 
 /**
  * Policy Job Status Interface

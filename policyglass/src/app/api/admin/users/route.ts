@@ -2,6 +2,7 @@ import { AdminController } from '@/app/controllers/admin.controller';
 import { getSession } from '@/app/lib/session';
 // import { z } from 'zod';
 import defineRoute from '@omer-x/next-openapi-route-handler';
+import { NextRequest } from 'next/server';
 
 // Import schemas
 import { 
@@ -65,13 +66,13 @@ export const { PUT } = defineRoute({
       return new Response(JSON.stringify({ error: 'Cannot remove your own admin role' }), { status: 400 });
     }
 
-    const request = new Request('http://localhost/api/admin/users', {
+    const request = new NextRequest('http://localhost/api/admin/users', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
     
-    const result = await AdminController.updateUserRole(request as any);
+    const result = await AdminController.updateUserRole(request);
     
     if ('error' in result) {
       return new Response(JSON.stringify(result), { status: 500 });

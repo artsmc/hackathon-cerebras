@@ -3,9 +3,26 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+interface ApiMethod {
+  summary?: string;
+  operationId?: string;
+  [key: string]: unknown;
+}
+
+interface ApiPaths {
+  [path: string]: {
+    [method: string]: ApiMethod;
+  };
+}
+
+interface ApiSpec {
+  paths: ApiPaths;
+  [key: string]: unknown;
+}
+
 export default function ApiDocsPage() {
   const router = useRouter();
-  const [spec, setSpec] = useState<any>(null);
+  const [spec, setSpec] = useState<ApiSpec | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -76,11 +93,11 @@ export default function ApiDocsPage() {
           <div className="border-t pt-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">Available Endpoints</h3>
             <div className="grid gap-4">
-              {Object.entries(spec.paths).map(([path, methods]: [string, any]) => (
+              {spec && Object.entries(spec.paths).map(([path, methods]: [string, ApiPaths[string]]) => (
                 <div key={path} className="border rounded-lg p-4 bg-gray-50">
                   <div className="font-mono text-sm text-gray-700 mb-2">{path}</div>
                   <div className="flex flex-wrap gap-2">
-                    {Object.entries(methods).map(([method, details]: [string, any]) => (
+                    {Object.entries(methods).map(([method, details]: [string, ApiMethod]) => (
                       <span 
                         key={method} 
                         className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800 capitalize"

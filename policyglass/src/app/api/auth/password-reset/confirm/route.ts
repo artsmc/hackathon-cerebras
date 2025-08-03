@@ -1,9 +1,9 @@
 import { AuthController } from '@/app/controllers/auth.controller';
-import { z } from 'zod';
 import defineRoute from '@omer-x/next-openapi-route-handler';
+import { NextRequest } from 'next/server';
 
 // Import schemas
-import { PasswordResetConfirmRequestSchema, PasswordResetConfirmResponseSchema } from '@/app/lib/openapi/schemas';
+import { PasswordResetConfirmRequestSchema } from '@/app/lib/openapi/schemas';
 
 export const { POST } = defineRoute({
   operationId: 'confirmPasswordReset',
@@ -13,13 +13,13 @@ export const { POST } = defineRoute({
   tags: ['Authentication'],
   requestBody: PasswordResetConfirmRequestSchema,
   action: async ({ body }) => {
-    const request = new Request('http://localhost/api/auth/password-reset/confirm', {
+    const request = new NextRequest('http://localhost/api/auth/password-reset/confirm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
     
-    const result = await AuthController.confirmPasswordReset(request as any);
+    const result = await AuthController.confirmPasswordReset(request);
     
     if ('error' in result) {
       return new Response(JSON.stringify(result), { status: 400 });

@@ -1,7 +1,7 @@
 import { verifySession, isAdmin } from '../../lib/session'
 
 export default async function AdminUsersPage() {
-  const session = await verifySession()
+  // const session = await verifySession()
   const userIsAdmin = await isAdmin()
   
   if (!userIsAdmin) {

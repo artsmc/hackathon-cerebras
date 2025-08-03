@@ -3,7 +3,7 @@ import { PolicyJobService } from '../../../services/policy-job.service';
 import { BackgroundProcessorService } from '../../../services/background-processor.service';
 import { UserQuotaService } from '../../../services/user-quota.service';
 import { JobLoggerService } from '../../../services/job-logger.service';
-import { CreateJobRequest, CreateJobResponse } from '../../../types/policy-audit.types';
+import { CreateJobResponse } from '../../../types/policy-audit.types';
 import { verifySession } from '../../../lib/session';
 import { z } from 'zod';
 

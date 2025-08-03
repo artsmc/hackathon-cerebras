@@ -1,9 +1,9 @@
 import { AuthController } from '@/app/controllers/auth.controller';
-import { z } from 'zod';
 import defineRoute from '@omer-x/next-openapi-route-handler';
+import { NextRequest } from 'next/server';
 
 // Import schemas
-import { RegisterRequestSchema, RegisterResponseSchema } from '@/app/lib/openapi/schemas';
+import { RegisterRequestSchema } from '@/app/lib/openapi/schemas';
 
 export const { POST } = defineRoute({
   operationId: 'registerUser',
@@ -13,13 +13,13 @@ export const { POST } = defineRoute({
   tags: ['Authentication'],
   requestBody: RegisterRequestSchema,
   action: async ({ body }) => {
-    const request = new Request('http://localhost/api/auth/register', {
+    const request = new NextRequest('http://localhost/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
     
-    const result = await AuthController.register(request as any);
+    const result = await AuthController.register(request);
     
     if ('error' in result) {
       return new Response(JSON.stringify(result), { status: 400 });
