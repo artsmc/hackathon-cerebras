@@ -9,7 +9,7 @@ import Header from "../components/Header";
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
   const router = useRouter();
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle submit logic here
@@ -29,7 +29,7 @@ export default function Home() {
         setCurrentAnimation(prev => prev + 1);
       }
     }, 2000); // Show each animation for 2 seconds
-    
+
     return () => clearTimeout(animationTimer);
   }, [currentAnimation]);
 
@@ -38,7 +38,7 @@ export default function Home() {
       <div className="font-sans min-h-screen py-4 pb-20">
         <Header />
         <main className="flex flex-col gap-8 items-center">
-          
+
           <div className="flex w-full max-w-6xl gap-8">
             {/* Left Column - 33% width (increased from 25%) */}
             <div className="w-1/3 pl-8 pr-4">
@@ -46,12 +46,12 @@ export default function Home() {
               <div className="mb-8 p-6 bg-white border border-gray-200 rounded-[24px] transition-all duration-300 hover:shadow-lg ">
                 <h2 className="text-xl font-semibold mb-4 text-foreground">About PolicyGlass</h2>
                 <p className="text-foreground">
-                  PolicyGlass is an innovative platform that helps you analyze and understand complex policy documents. 
-                  Our AI-powered tool breaks down legal jargon into comprehensible insights, making policy analysis 
+                  PolicyGlass is an innovative platform that helps you analyze and understand complex policy documents.
+                  Our AI-powered tool breaks down legal jargon into comprehensible insights, making policy analysis
                   accessible to everyone. Simply enter a policy document or topic in the input field to get started.
                 </p>
               </div>
-              
+
               {/* Input Div */}
               <div className="p-6 bg-white border border-gray-200 rounded-[24px] transition-all duration-300 hover:shadow-lg animate-breathing-shadow">
                 <h2 className="text-xl font-semibold mb-4 text-foreground">Analyze a Policy</h2>
@@ -70,24 +70,29 @@ export default function Home() {
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-emerald-700 text-white px-4 py-2 rounded-md hover:bg-emerald-400 transition-all duration-300 hover:shadow-md"
+                    disabled={!inputValue}
+                    className={`w-full px-4 py-2 rounded-md transition-all duration-300 hover:shadow-md ${
+                      inputValue 
+                        ? "bg-emerald-700 text-white hover:bg-emerald-400" 
+                        : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                    }`}
                   >
                     Analyze Policy
                   </button>
                 </form>
               </div>
             </div>
-            
+
             {/* Right Column - 67% width */}
             <div className="w-2/3 pr-8 pl-4 flex items-center justify-center relative">
               <div className="w-full h-full bg-gray-100 border border-gray-300 rounded-[24px] flex items-center justify-center overflow-hidden relative">
                 {/* Background image */}
-                <img 
-                  src="/home.jpg" 
-                  alt="Policy analysis background" 
+                <img
+                  src="/home.jpg"
+                  alt="Policy analysis background"
                   className="absolute inset-0 w-full h-full object-cover z-0"
                 />
-                
+
                 {/* Animation container - half width, positioned above center, with left padding */}
                 <div className="absolute top-[20%] left-[5%] w-1/2 z-10">
                   <AnimatePresence>
@@ -100,12 +105,13 @@ export default function Home() {
                         exit={{ opacity: 0, y: -100 }}
                         transition={{ duration: 0.5 }}
                       >
-                        <p className="text-2xl font-bold text-foreground bg-background bg-opacity-80 p-4 rounded-lg">
-                          Review these terms and conditions
+                        <p className="text-md text-foreground mb-4 text-center bg-background bg-opacity-80 p-4 rounded-lg">
+                          Analyze Disney+ Terms and Conditions
+
                         </p>
                       </motion.div>
                     )}
-                    
+
                     {currentAnimation === 1 && (
                       <motion.div
                         key="flags"
@@ -118,35 +124,35 @@ export default function Home() {
                         <h2 className="text-xl font-semibold text-foreground mb-4 text-center">
                           Analysis Results
                         </h2>
-                        
+
                         {/* Flags */}
                         <div className="mb-4">
                           <h3 className="text-lg font-medium text-foreground mb-2">Flags Identified</h3>
                           <div className="space-y-2">
                             <div className="flex items-start p-2 bg-red-100 rounded">
-                              <span className="text-red-800 text-sm">Potential bias detected in policy language</span>
+                              <span className="text-red-800 text-sm">Signs of Excessive Data Collection</span>
                             </div>
                             <div className="flex items-start p-2 bg-red-100 rounded">
-                              <span className="text-red-800 text-sm">Contradictory statements found</span>
+                              <span className="text-red-800 text-sm">Ambiguous Risks and Liability Language</span>
                             </div>
                           </div>
                         </div>
-                        
+
                         {/* Warnings */}
                         <div>
                           <h3 className="text-lg font-medium text-foreground mb-2">Warnings</h3>
                           <div className="space-y-2">
                             <div className="flex items-start p-2 bg-yellow-100 rounded">
-                              <span className="text-yellow-800 text-sm">Implementation timeline appears unrealistic</span>
+                              <span className="text-yellow-800 text-sm">Moderate Risk of Content Rights</span>
                             </div>
                             <div className="flex items-start p-2 bg-yellow-100 rounded">
-                              <span className="text-yellow-800 text-sm">Compliance requirements not clearly defined</span>
+                              <span className="text-yellow-800 text-sm">Low Psychological and Algorithmic Impact</span>
                             </div>
                           </div>
                         </div>
                       </motion.div>
                     )}
-                    
+
                     {currentAnimation === 2 && (
                       <motion.div
                         key="review"
@@ -164,10 +170,10 @@ export default function Home() {
                             </svg>
                           ))}
                         </div>
-                        <p className="text-foreground">
-                          PolicyGlass protected me from agreeing to Disney’s predatory release of liability within Disney+. Now, if I get injured, I have the grounds to sue!
+                        <p className="text-foreground italic">
+                          "PolicyGlass protected me from agreeing to Disney’s predatory release of liability within Disney+. Now, if I get injured, I have the grounds to sue!""
                         </p>
-                        <p className="text-foreground font-medium mt-4">- Alexandra Rosay, Associate Analyst</p>
+                        <p className="text-foreground font-semibold mt-4">- Alexandra Rosay, Associate Analyst</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
