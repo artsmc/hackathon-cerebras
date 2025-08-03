@@ -36,7 +36,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
         if (onLoginSuccess) {
           onLoginSuccess(data.token);
         } else {
-          router.push('/dashboard');
+          router.push('/home');
         }
       } else {
         setError(data.error || 'Login failed');
